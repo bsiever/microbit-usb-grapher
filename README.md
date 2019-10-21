@@ -27,6 +27,14 @@ The Makecode simulator can already collect and graph data, but it's data collect
 * Desireable 
   * Ability to measure time between different events
 
+## Deliverables 
+
+* A web-app for collecting and graphing time-series data and events from micro:bits
+  * should allow users to interact with data to find features of interest
+* Instruction manuals & Documentation
+  * Use
+  * Setup and Application Architecture (how to deploy a new instance and anything future developers may need to know/understand)
+
 ## Potential Components 
 
 ### USB Interaction
