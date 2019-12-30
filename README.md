@@ -57,4 +57,4 @@ TODO: More and descriptions of good/bad
 
 * [mySci:Do C.S. Extension](https://docs.google.com/presentation/d/1CIyQK71pNGHjf5gfHqg3yD-sWP0rnXZlt6-MK9j_ISk/edit?ts=5c9e48f6#slide=id.g5475e6f318_0_0)
 * Example lesson plans that may use equipment/app
-  * [Thermal Energy Integration](https://docs.google.com/document/d/1QrpOTx8CPjq-xRYbbaWQmzVJVbB77bzh9p2SAFtpW98/edit?usp=sharing)  (<a href="https://docs.google.com/document/d/1QrpOTx8CPjq-xRYbbaWQmzVJVbB77bzh9p2SAFtpW98/edit?usp=sharing" target="_blank">example</a>)
+  * [Thermal Energy Integration](https://docs.google.com/document/d/1QrpOTx8CPjq-xRYbbaWQmzVJVbB77bzh9p2SAFtpW98/edit?usp=sharing)
