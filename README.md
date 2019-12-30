@@ -57,5 +57,3 @@ TODO: More and descriptions of good/bad
 
 * [mySci:Do C.S. Extension](https://docs.google.com/presentation/d/1CIyQK71pNGHjf5gfHqg3yD-sWP0rnXZlt6-MK9j_ISk/edit?ts=5c9e48f6#slide=id.g5475e6f318_0_0)
 * Example lesson plans that may use equipment/app
-  * [The Transferring of Heat Lesson Plan](https://drive.google.com/drive/folders/0B7hStQcFcBV1Sk4xZEJ2WlNXcGs)
-  * [Another Transferring of Heat Lesson Plan](https://drive.google.com/drive/folders/0B7hStQcFcBV1Sk4xZEJ2WlNXcGs)
