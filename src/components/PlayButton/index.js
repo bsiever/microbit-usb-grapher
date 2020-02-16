@@ -18,6 +18,7 @@ class PlayButton extends Component {
           labelPosition="left"
           onClick={this.props.onClick}
           color="green"
+          style={{width: '115.28px'}}
         >
           <Icon name="play" />
           Play

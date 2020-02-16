@@ -115,7 +115,9 @@ class App extends React.Component {
             <Table.Body>
               <Table.Row>
                 <Table.Cell width={2} verticalAlign="top"> 
-                <PlayButton />
+                <PlayButton isRunning={this.state.isRunning} onClick={()=>{
+                  (this.state.isRunning) ? this.setState({isRunning: false}) : this.setState({isRunning: true})
+                }}/>
 
                 <Divider hidden/>
 

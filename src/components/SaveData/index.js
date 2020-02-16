@@ -21,6 +21,7 @@ class SaveDataButton extends Component {
         labelPosition="left"
         onClick={(e)=> exportToCSV(this.props.csvData, this.props.fileName)}
         color="grey"
+        style={{width: '115.28px'}}
       >
         <Icon name="save" />
         Save
