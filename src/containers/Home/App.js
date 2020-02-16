@@ -1,9 +1,11 @@
 import React from 'react';
 import '../../styles/App.css';
-import {Container, Segment, Grid, Divider, Table} from 'semantic-ui-react';
+import {Container, Divider, Table} from 'semantic-ui-react';
 import {Header, Icon} from 'semantic-ui-react';
 import BrushChart from '../../components/BrushChart';
 import PlayButton from '../../components/PlayButton';
+import SaveDataButton from '../../components/SaveData';
+const moment = require('moment');
 
 class App extends React.Component {
   constructor (props) {
@@ -89,6 +91,13 @@ class App extends React.Component {
   }
 
   render () {
+
+    var arr = [2, 5, 6, 3, 8, 9]; 
+          
+        var csvData = arr.map(function(val, index){ 
+            return {key:index, value:val*val}; 
+        }) 
+
     return (
       <div>
 
@@ -105,7 +114,13 @@ class App extends React.Component {
           <Table definition>
             <Table.Body>
               <Table.Row>
-                <Table.Cell width={2} verticalAlign="top"> <PlayButton /></Table.Cell>
+                <Table.Cell width={2} verticalAlign="top"> 
+                <PlayButton />
+
+                <Divider hidden/>
+
+                <SaveDataButton csvData={csvData} fileName={"microbit-usb-data-" + moment().format('MM-DD') + ".csv"}/>
+                </Table.Cell>
                 <Table.Cell>
                   <BrushChart
                     options={this.state.options}
