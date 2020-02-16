@@ -119,7 +119,7 @@ class App extends React.Component {
 
                 <Divider hidden/>
 
-                <SaveDataButton csvData={csvData} fileName={"microbit-usb-data-" + moment().format('MM-DD') + ".csv"}/>
+                <SaveDataButton csvData={csvData} fileName={"microbit-usb-data-" + moment().format('MM-DD')}/>
                 </Table.Cell>
                 <Table.Cell>
                   <BrushChart
