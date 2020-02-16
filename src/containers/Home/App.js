@@ -1,33 +1,125 @@
 import React from 'react';
-import logo from '../../images/logo.svg';
 import '../../styles/App.css';
+import {Container, Segment, Grid, Divider, Table} from 'semantic-ui-react';
+import {Header, Icon} from 'semantic-ui-react';
+import BrushChart from '../../components/BrushChart';
+import PlayButton from '../../components/PlayButton';
 
 class App extends React.Component {
   constructor (props) {
     super (props);
-
     this.state = {
       isRunning: false,
+      series: [
+        {
+          data: ['100', '200', '400'],
+        },
+      ],
+      options: {
+        chart: {
+          id: 'chart2',
+          type: 'line',
+          height: 230,
+          toolbar: {
+            autoSelected: 'pan',
+            show: false,
+          },
+        },
+        colors: ['#546E7A'],
+        stroke: {
+          width: 3,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        fill: {
+          opacity: 1,
+        },
+        markers: {
+          size: 0,
+        },
+        xaxis: {
+          type: 'date',
+          categories: [],
+        },
+      },
+
+      seriesLine: [
+        {
+          data: [
+            '2019-11-30T08:17:24.220Z',
+            '2019-12-30T08:17:24.220Z',
+            '2020-1-30T08:17:24.220Z',
+          ],
+        },
+      ],
+      optionsLine: {
+        chart: {
+          id: 'chart1',
+          height: 130,
+          type: 'area',
+          brush: {
+            target: 'chart2',
+            enabled: true,
+          },
+          selection: {
+            enabled: true,
+          },
+        },
+        colors: ['#008FFB'],
+        fill: {
+          type: 'gradient',
+          gradient: {
+            opacityFrom: 0.91,
+            opacityTo: 0.1,
+          },
+        },
+        xaxis: {
+          type: 'date',
+          tooltip: {
+            enabled: false,
+          },
+        },
+        yaxis: {
+          tickAmount: 2,
+        },
+      },
+      seconds: 0,
     };
   }
 
   render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+
+        <Header as="h2" icon inverted textAlign="center">
+          <Icon name="line graph" />
+          Micro:Bit USB Grapher
+          <Header.Subheader>
+            Collect and graph data on one or more Miro:bits!
+          </Header.Subheader>
+        </Header>
+        <Divider />
+
+        <Container>
+          <Table definition>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell width={2} verticalAlign="top"> <PlayButton /></Table.Cell>
+                <Table.Cell>
+                  <BrushChart
+                    options={this.state.options}
+                    series={this.state.series}
+                    optionsLine={this.state.optionsLine}
+                    seriesLine={this.state.seriesLine}
+                    height={this.state.height}
+                    areaHeight={this.state.areaHeight}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+        </Container>
       </div>
     );
   }
