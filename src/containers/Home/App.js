@@ -5,6 +5,7 @@ import {Header, Icon} from 'semantic-ui-react';
 import BrushChart from '../../components/BrushChart';
 import PlayButton from '../../components/PlayButton';
 import SaveDataButton from '../../components/SaveData';
+import {testMicro} from '../../microbit-test/testbit'
 const moment = require('moment');
 
 class App extends React.Component {
@@ -97,6 +98,8 @@ class App extends React.Component {
         var csvData = arr.map(function(val, index){ 
             return {key:index, value:val*val}; 
         }) 
+
+    testMicro()
 
     return (
       <div>
