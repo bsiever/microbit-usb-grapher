@@ -4,10 +4,10 @@ labels: bug
 ---
 
 **Expected behavior**
-*Description of what you expected to happen.*
+Description of what you expected to happen.
 
 **Actual behavior**
-*Description of what is actually happening.*
+Description of what is actually happening.
 
 **To Reproduce**
 Steps to reproduce the bug's behavior:
@@ -17,10 +17,10 @@ Steps to reproduce the bug's behavior:
 4. See error
 
 **Screenshots**
-*Sdd screenshots to help explain your problem if necessary.*
+Add screenshots to help explain your problem if necessary.
 
 **Logs**
-*Include stack traces or any other logs that may help understand the problem.*
+Include stack traces or any other logs that may help understand the problem.
 
 **Additional Information**
-*Add any other context about the problem here.*
+Add any other context about the problem here.
