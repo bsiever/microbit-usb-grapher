@@ -1,12 +1,9 @@
-import React from 'react';
+import React, {createRef} from 'react';
 import '../../styles/App.css';
-import {Container, Divider, Table} from 'semantic-ui-react';
+import {Container, Divider} from 'semantic-ui-react';
 import {Header, Icon} from 'semantic-ui-react';
-import BrushChart from '../../components/BrushChart';
-import PlayButton from '../../components/PlayButton';
-import SaveDataButton from '../../components/SaveData';
-import {testMicro} from '../../microbit-test/testbit'
-const moment = require('moment');
+import {testMicro} from '../../microbit-test/testbit';
+import MicrobitGraph from '../../components/MicrobitGraph';
 
 class App extends React.Component {
   constructor (props) {
@@ -91,15 +88,16 @@ class App extends React.Component {
     };
   }
 
+  contextRef = createRef ();
+
   render () {
+    var arr = [2, 5, 6, 3, 8, 9];
 
-    var arr = [2, 5, 6, 3, 8, 9]; 
-          
-        var csvData = arr.map(function(val, index){ 
-            return {key:index, value:val*val}; 
-        }) 
+    var csvData = arr.map (function (val, index) {
+      return {key: index, value: val * val};
+    });
 
-    testMicro()
+    testMicro ();
 
     return (
       <div>
@@ -114,31 +112,21 @@ class App extends React.Component {
         <Divider />
 
         <Container>
-          <Table definition>
-            <Table.Body>
-              <Table.Row>
-                <Table.Cell width={2} verticalAlign="top"> 
-                <PlayButton isRunning={this.state.isRunning} onClick={()=>{
-                  (this.state.isRunning) ? this.setState({isRunning: false}) : this.setState({isRunning: true})
-                }}/>
-
-                <Divider hidden/>
-
-                <SaveDataButton csvData={csvData} fileName={"microbit-usb-data-" + moment().format('MM-DD')}/>
-                </Table.Cell>
-                <Table.Cell>
-                  <BrushChart
-                    options={this.state.options}
-                    series={this.state.series}
-                    optionsLine={this.state.optionsLine}
-                    seriesLine={this.state.seriesLine}
-                    height={this.state.height}
-                    areaHeight={this.state.areaHeight}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table>
+          <MicrobitGraph
+            csvData={csvData}
+            options={this.state.options}
+            series={this.state.series}
+            optionsLine={this.state.optionsLine}
+            seriesLine={this.state.seriesLine}
+            height={this.state.height}
+            areaHeight={this.state.areaHeight}
+            isRunning={this.state.isRunning}
+            playOnClick={() => {
+              this.state.isRunning
+                ? this.setState ({isRunning: false})
+                : this.setState ({isRunning: true});
+            }}
+          />
         </Container>
       </div>
     );
