@@ -1,17 +1,21 @@
 import React from 'react';
 import '../../styles/App.css';
-import {Container, Divider, Table} from 'semantic-ui-react';
+import {Container, Divider, Table, Button} from 'semantic-ui-react';
 import {Header, Icon} from 'semantic-ui-react';
 import BrushChart from '../../components/BrushChart';
 import PlayButton from '../../components/PlayButton';
 import SaveDataButton from '../../components/SaveData';
-import {testMicro} from '../../microbit-test/testbit'
+import {SideNav} from '../../components/SideNav'
+import { AddMicroButton } from '../../components/AddMicroButton';
+import {uBitDisconnect} from '../../utils/microbit-api'
 const moment = require('moment');
 
 class App extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
+      // mirco connections
+      devices: {},
       isRunning: false,
       series: [
         {
@@ -89,6 +93,24 @@ class App extends React.Component {
       },
       seconds: 0,
     };
+
+    this.coolCallBack = this.coolCallBack.bind(this);
+
+  }
+
+  coolCallBack(type, device, data) {
+    if (type === 'connected') {
+      let devices = this.state.devices;
+      devices[device.productName] = device;
+      this.setState({devices: devices  })
+    }
+  }
+
+  disconnectDevice(device) {
+    uBitDisconnect(device)
+    let devices = this.state.devices
+    delete devices[device.productName]
+    this.setState({devices: devices})
   }
 
   render () {
@@ -97,13 +119,18 @@ class App extends React.Component {
           
         var csvData = arr.map(function(val, index){ 
             return {key:index, value:val*val}; 
-        }) 
+        });
 
-    testMicro()
+    let disconnectButtons = Object.keys(this.state.devices).map(deviceName => 
+      <Button onClick={this.disconnectDevice.bind(this, this.state.devices[deviceName])}>
+        Disconnect Device: {deviceName}
+      </Button>
+      );
 
     return (
       <div>
-
+        <AddMicroButton onAddComplete={this.coolCallBack}/>
+        {disconnectButtons}
         <Header as="h2" icon inverted textAlign="center">
           <Icon name="line graph" />
           Micro:Bit USB Grapher

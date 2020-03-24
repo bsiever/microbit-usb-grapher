@@ -135,7 +135,7 @@ function uBitOpenDevice(device, callback) {
  * Disconnect from a device 
  * @param {USBDevice} device to disconnect from 
  */
-function uBitDisconnect(device) {
+export function uBitDisconnect(device) {
     if(device && device.opened) {
         device.close()
     }

@@ -3,7 +3,7 @@ import {Button} from 'semantic-ui-react';
 import {uBitConnectDevice} from '../utils/microbit-api'
 
 /**
- * 
+ * AddMicroButton
  * @param {*} props
  *  onAddComplete: callback function when the mirco is added or failed to add
  *   The call back should take at least three parameters
@@ -11,7 +11,7 @@ import {uBitConnectDevice} from '../utils/microbit-api'
  *     2. device: This is an id for the device
  *     3. data: Whatever data the micro sends 
  */
-export function AddMircoButton(props) {
+export function AddMicroButton(props) {
 
     let connectMicro = () => {
         uBitConnectDevice(props.onAddComplete)
