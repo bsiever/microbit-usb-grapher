@@ -1,25 +1,52 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import '../../styles/App.css';
 import {Container, Divider, Table, Button} from 'semantic-ui-react';
 import {Header, Icon} from 'semantic-ui-react';
-import BrushChart from '../../components/BrushChart';
-import PlayButton from '../../components/PlayButton';
-import SaveDataButton from '../../components/SaveData';
 import {SideNav} from '../../components/SideNav'
 import { AddMicroButton } from '../../components/AddMicroButton';
 import {uBitDisconnect} from '../../utils/microbit-api'
+import MicrobitGraph from '../../components/MicrobitGraph';
+import StickyStatistics from '../../components/StickyStatistics';
 const moment = require('moment');
 
 class App extends React.Component {
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
     this.state = {
       // mirco connections
       devices: {},
       isRunning: false,
-      series: [
+      microbitsConnected: 3,
+      graphs: [
         {
-          data: ['100', '200', '400'],
+          title: 'Test1',
+          isRunning: false,
+          timeElapsed: 0,
+          series: [
+            {
+              data: ['100', '200', '400'],
+            },
+          ],
+        },
+        {
+          title: 'Test2',
+          isRunning: false,
+          timeElapsed: 0,
+          series: [
+            {
+              data: ['100', '200', '400'],
+            },
+          ],
+        },
+        {
+          title: 'Test3',
+          isRunning: false,
+          timeElapsed: 0,
+          series: [
+            {
+              data: ['100', '200', '400'],
+            },
+          ],
         },
       ],
       options: {
@@ -113,7 +140,10 @@ class App extends React.Component {
     this.setState({devices: devices})
   }
 
-  render () {
+  contextRef = createRef();
+
+  render() {
+    var arr = [2, 5, 6, 3, 8, 9];
 
     var arr = [2, 5, 6, 3, 8, 9]; 
           
@@ -135,37 +165,43 @@ class App extends React.Component {
           <Icon name="line graph" />
           Micro:Bit USB Grapher
           <Header.Subheader>
-            Collect and graph data on one or more Miro:bits!
+            Collect and graph data on one or more Micro:bits!
           </Header.Subheader>
         </Header>
         <Divider />
 
+        <StickyStatistics
+          microbitsConnected={this.state.microbitsConnected}
+          timeElapsed={this.state.timeElapsed}
+        />
+
         <Container>
-          <Table definition>
-            <Table.Body>
-              <Table.Row>
-                <Table.Cell width={2} verticalAlign="top"> 
-                <PlayButton isRunning={this.state.isRunning} onClick={()=>{
-                  (this.state.isRunning) ? this.setState({isRunning: false}) : this.setState({isRunning: true})
-                }}/>
-
-                <Divider hidden/>
-
-                <SaveDataButton csvData={csvData} fileName={"microbit-usb-data-" + moment().format('MM-DD')}/>
-                </Table.Cell>
-                <Table.Cell>
-                  <BrushChart
-                    options={this.state.options}
-                    series={this.state.series}
-                    optionsLine={this.state.optionsLine}
-                    seriesLine={this.state.seriesLine}
-                    height={this.state.height}
-                    areaHeight={this.state.areaHeight}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table>
+          {this.state.graphs.map((g, index) => {
+            return (
+              <div>
+                <MicrobitGraph
+                  title={g.title}
+                  csvData={csvData}
+                  options={this.state.options}
+                  series={g.series}
+                  optionsLine={this.state.optionsLine}
+                  seriesLine={this.state.seriesLine}
+                  height={this.state.height}
+                  areaHeight={this.state.areaHeight}
+                  isRunning={g.isRunning}
+                  playOnClick={() => {
+                    let updatedGraphs = JSON.parse(
+                      JSON.stringify(this.state.graphs)
+                    );
+                    updatedGraphs[index].isRunning = g.isRunning ? false : true;
+                    this.setState({
+                      graphs: updatedGraphs,
+                    });
+                  }}
+                />
+              </div>
+            );
+          })}
         </Container>
       </div>
     );
