@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button} from 'semantic-ui-react';
-import {uBitConnectDevice} from '../../utils/microbit-api'
+import { Button, Icon } from 'semantic-ui-react';
+import { uBitConnectDevice } from '../../utils/microbit-api';
 
 /**
  * AddMicroButton
@@ -12,10 +12,13 @@ import {uBitConnectDevice} from '../../utils/microbit-api'
  *     3. data: Whatever data the micro sends 
  */
 export function AddMicroButton(props) {
+  let connectMicro = () => {
+    uBitConnectDevice(props.onAddComplete);
+  };
 
-    let connectMicro = () => {
-        uBitConnectDevice(props.onAddComplete)
-    }
-
-    return <Button onClick={e => connectMicro()}>Add Micro</Button>
+  return (
+    <Button size="big" onClick={(e) => connectMicro()}>
+      <Icon name="plus" />Add Micro:bit
+    </Button>
+  );
 }

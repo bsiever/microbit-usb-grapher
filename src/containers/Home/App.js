@@ -1,13 +1,12 @@
 import React, { createRef } from 'react';
 import '../../styles/App.css';
-import {Container, Divider, Table, Button} from 'semantic-ui-react';
-import {Header, Icon} from 'semantic-ui-react';
-import {SideNav} from '../../components/SideNav'
+import { Container, Divider, Button } from 'semantic-ui-react';
+import { Header, Icon } from 'semantic-ui-react';
+import { SideNav } from '../../components/SideNav';
 import { AddMicroButton } from '../../components/AddMicroButton';
-import {uBitDisconnect} from '../../utils/microbit-api'
+import { uBitDisconnect } from '../../utils/microbit-api';
 import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
-const moment = require('moment');
 
 class App extends React.Component {
   constructor(props) {
@@ -122,22 +121,21 @@ class App extends React.Component {
     };
 
     this.coolCallBack = this.coolCallBack.bind(this);
-
   }
 
   coolCallBack(type, device, data) {
     if (type === 'connected') {
       let devices = this.state.devices;
       devices[device.productName] = device;
-      this.setState({devices: devices  })
+      this.setState({ devices: devices });
     }
   }
 
   disconnectDevice(device) {
-    uBitDisconnect(device)
-    let devices = this.state.devices
-    delete devices[device.productName]
-    this.setState({devices: devices})
+    uBitDisconnect(device);
+    let devices = this.state.devices;
+    delete devices[device.productName];
+    this.setState({ devices: devices });
   }
 
   contextRef = createRef();
@@ -145,37 +143,40 @@ class App extends React.Component {
   render() {
     var arr = [2, 5, 6, 3, 8, 9];
 
-    var arr = [2, 5, 6, 3, 8, 9]; 
-          
-        var csvData = arr.map(function(val, index){ 
-            return {key:index, value:val*val}; 
-        });
+    var csvData = arr.map(function(val, index) {
+      return { key: index, value: val * val };
+    });
 
-    let disconnectButtons = Object.keys(this.state.devices).map(deviceName => 
-      <Button onClick={this.disconnectDevice.bind(this, this.state.devices[deviceName])}>
-        Disconnect Device: {deviceName}
+    let disconnectButtons = Object.keys(
+      this.state.devices
+    ).map((deviceName) => (
+      <Button
+        onClick={this.disconnectDevice.bind(
+          this,
+          this.state.devices[deviceName]
+        )}
+      >
+        Disconnect Device: {deviceName}{' '}
       </Button>
-      );
+    ));
 
     return (
       <div>
-        <AddMicroButton onAddComplete={this.coolCallBack}/>
-        {disconnectButtons}
         <Header as="h2" icon inverted textAlign="center">
           <Icon name="line graph" />
-          Micro:Bit USB Grapher
+          Micro: bit USB Grapher{' '}
           <Header.Subheader>
-            Collect and graph data on one or more Micro:bits!
-          </Header.Subheader>
-        </Header>
+            Collect and graph data on one or more Micro: bits!
+          </Header.Subheader>{' '}
+        </Header>{' '}
         <Divider />
-
         <StickyStatistics
           microbitsConnected={this.state.microbitsConnected}
           timeElapsed={this.state.timeElapsed}
         />
-
         <Container>
+          <AddMicroButton onAddComplete={this.coolCallBack} />{' '}
+          {disconnectButtons}{' '}
           {this.state.graphs.map((g, index) => {
             return (
               <div>
@@ -198,11 +199,11 @@ class App extends React.Component {
                       graphs: updatedGraphs,
                     });
                   }}
-                />
+                />{' '}
               </div>
             );
-          })}
-        </Container>
+          })}{' '}
+        </Container>{' '}
       </div>
     );
   }
