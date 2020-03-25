@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button} from 'semantic-ui-react';
-import {uBitConnectDevice} from '../utils/microbit-api'
+import {uBitConnectDevice} from '../../utils/microbit-api'
 
 /**
  * AddMicroButton
