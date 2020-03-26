@@ -183,6 +183,7 @@ class App extends React.Component {
       </Button>
     ));
 
+    const graphs = this.state.graphs;
     return (
       <div>
         <Header as="h2" icon inverted textAlign="center">
@@ -200,24 +201,24 @@ class App extends React.Component {
         <Container>
           <AddMicroButton onAddComplete={this.microbitCallBack} />
           {disconnectButtons}
-          {this.state.graphs.map((key, value, g, index) => {
+          {graphs && Object.keys(graphs).map((key, index) => {
             return (
               <div>
                 <MicrobitGraph
-                  title={g.title}
+                  title={graphs[key].title}
                   csvData={csvData}
                   options={this.state.options}
-                  series={g.series}
+                  series={graphs[key].series}
                   optionsLine={this.state.optionsLine}
                   seriesLine={this.state.seriesLine}
                   height={this.state.height}
                   areaHeight={this.state.areaHeight}
-                  isRunning={g.isRunning}
+                  isRunning={graphs[key].isRunning}
                   playOnClick={() => {
                     let updatedGraphs = JSON.parse(
                       JSON.stringify(this.state.graphs)
                     );
-                    updatedGraphs[index].isRunning = g.isRunning ? false : true;
+                    updatedGraphs[index].isRunning = graphs[key].isRunning ? false : true;
                     this.setState({
                       graphs: updatedGraphs,
                     });
