@@ -18,39 +18,6 @@ class App extends React.Component {
       isRunning: false,
       microbitsConnected: 3,
       graphs: [],
-      // [
-      //   {
-      //     deviceSerial: '',
-      //     title: 'Test1',
-      //     isRunning: false,
-      //     timeElapsed: 0,
-      //     series: [
-      //       {
-      //         data: ['100', '200', '400'],
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'Test2',
-      //     isRunning: false,
-      //     timeElapsed: 0,
-      //     series: [
-      //       {
-      //         data: ['100', '200', '400'],
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'Test3',
-      //     isRunning: false,
-      //     timeElapsed: 0,
-      //     series: [
-      //       {
-      //         data: ['100', '200', '400'],
-      //       },
-      //     ],
-      //   },
-      // ],
       options: {
         chart: {
           id: 'chart2',
@@ -138,7 +105,10 @@ class App extends React.Component {
   disconnectDevice(device) {
     uBitDisconnect(device);
     let devices = this.state.devices;
+    let graphs = this.state.graphs;
     delete devices[device.serialNumber];
+    delete graphs[device.serialNumber];
+    this.setState({ graphs: graphs });
     this.setState({ devices: devices });
   }
 
@@ -169,21 +139,8 @@ class App extends React.Component {
       return { key: index, value: val * val };
     });
 
-    let disconnectButtons = Object.keys(
-      this.state.devices
-    ).map((deviceName) => (
-      <Button
-        size="big"
-        onClick={this.disconnectDevice.bind(
-          this,
-          this.state.devices[deviceName]
-        )}
-      >
-        Disconnect Device: {deviceName}
-      </Button>
-    ));
-
     const graphs = this.state.graphs;
+
     return (
       <div>
         <Header as="h2" icon inverted textAlign="center">
@@ -200,34 +157,37 @@ class App extends React.Component {
         />
         <Container>
           <AddMicroButton onAddComplete={this.microbitCallBack} />
-          {disconnectButtons}
-          {graphs && Object.keys(graphs).map((key, index) => {
-            return (
-              <div>
-                <MicrobitGraph
-                  title={graphs[key].title}
-                  csvData={csvData}
-                  options={this.state.options}
-                  series={graphs[key].series}
-                  optionsLine={this.state.optionsLine}
-                  seriesLine={this.state.seriesLine}
-                  height={this.state.height}
-                  areaHeight={this.state.areaHeight}
-                  isRunning={graphs[key].isRunning}
-                  playOnClick={() => {
-                    let updatedGraphs = JSON.parse(
-                      JSON.stringify(this.state.graphs)
-                    );
-                    updatedGraphs[index].isRunning = graphs[key].isRunning ? false : true;
-                    this.setState({
-                      graphs: updatedGraphs,
-                    });
-                  }}
-                  disconnectDevice={this.disconnectDevice}
-                />
-              </div>
-            );
-          })}
+          {graphs &&
+            Object.keys(graphs).map((key, index) => {
+              return (
+                <div>
+                  <MicrobitGraph
+                    device={this.state.devices[key]}
+                    title={graphs[key].title}
+                    csvData={csvData}
+                    options={this.state.options}
+                    series={graphs[key].series}
+                    optionsLine={this.state.optionsLine}
+                    seriesLine={this.state.seriesLine}
+                    height={this.state.height}
+                    areaHeight={this.state.areaHeight}
+                    isRunning={graphs[key].isRunning}
+                    playOnClick={() => {
+                      let updatedGraphs = JSON.parse(
+                        JSON.stringify(this.state.graphs)
+                      );
+                      updatedGraphs[index].isRunning = graphs[key].isRunning
+                        ? false
+                        : true;
+                      this.setState({
+                        graphs: updatedGraphs,
+                      });
+                    }}
+                    disconnectDevice={this.disconnectDevice.bind(this)}
+                  />
+                </div>
+              );
+            })}
         </Container>
       </div>
     );

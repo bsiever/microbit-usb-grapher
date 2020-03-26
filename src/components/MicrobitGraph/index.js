@@ -36,7 +36,7 @@ class MicrobitGraph extends Component {
                     fileName={'microbit-usb-data-' + moment().format('MM-DD')}
                   />
 
-                  <DisconnectMicroButton disconnectDevice={this.props.disconnectDevice} />
+                  <DisconnectMicroButton device={this.props.device} disconnectDevice={this.props.disconnectDevice.bind(this)} />
               
                   <Statistic
                     size="mini"
