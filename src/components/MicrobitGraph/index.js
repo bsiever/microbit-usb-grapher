@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Table,
-  Divider,
-  Header,
-  Statistic,
-  Icon,
-} from 'semantic-ui-react';
+import { Container, Table, Divider, Statistic, Icon } from 'semantic-ui-react';
 import PlayButton from './components/PlayButton';
 import SaveDataButton from './components/SaveData';
 import DisconnectMicroButton from './components/DisconnectMicroButton';
@@ -36,20 +29,19 @@ class MicrobitGraph extends Component {
                     fileName={'microbit-usb-data-' + moment().format('MM-DD')}
                   />
 
-                  <DisconnectMicroButton device={this.props.device} disconnectDevice={this.props.disconnectDevice.bind(this)} />
-              
-                  <Statistic
-                    size="mini"
-                    style={{
-                    
-                    }}
-                  >
+                  <Divider hidden />
+
+                  <DisconnectMicroButton
+                    device={this.props.device}
+                    disconnectDevice={this.props.disconnectDevice.bind(this)}
+                  />
+
+                  <Statistic size="mini" style={{}}>
                     <Statistic.Value>
                       <Icon name="clock outline" /> 0
                     </Statistic.Value>
                     <Statistic.Label>Time Elapsed</Statistic.Label>
                   </Statistic>
-                  
                 </Table.Cell>
                 <Table.Cell>
                   <BrushChart
@@ -65,7 +57,6 @@ class MicrobitGraph extends Component {
             </Table.Body>
           </Table>
         </Container>
-
         <Divider hidden />
       </div>
     );

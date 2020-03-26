@@ -1,13 +1,12 @@
 import React, { createRef } from 'react';
 import '../../styles/App.css';
-import { Container, Divider, Button } from 'semantic-ui-react';
+import { Container, Divider } from 'semantic-ui-react';
 import { Header, Icon } from 'semantic-ui-react';
 import { SideNav } from '../../components/SideNav';
 import { AddMicroButton } from '../../components/AddMicroButton';
 import { uBitDisconnect } from '../../utils/microbit-api';
 import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
-import { testMicro } from '../../microbit-test/testbit';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +15,7 @@ class App extends React.Component {
       // mirco connections
       devices: {},
       isRunning: false,
-      microbitsConnected: 3,
+      microbitsConnected: 0,
       graphs: [],
       options: {
         chart: {
@@ -108,8 +107,11 @@ class App extends React.Component {
     let graphs = this.state.graphs;
     delete devices[device.serialNumber];
     delete graphs[device.serialNumber];
-    this.setState({ graphs: graphs });
-    this.setState({ devices: devices });
+    this.setState({
+      graphs: graphs,
+      devices: devices,
+      microbitsConnected: this.state.microbitsConnected - 1,
+    });
   }
 
   createGraph(device) {
@@ -126,7 +128,10 @@ class App extends React.Component {
           },
         ],
       };
-      this.setState({ graphs: graphs });
+      this.setState({
+        graphs: graphs,
+        microbitsConnected: this.state.microbitsConnected + 1,
+      });
     }
   }
 

@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react';
 
 export function DisconnectMicroButton(props) {
   let disconnectMicro = () => {
-    props.disconnectDevice(props.device)
+    props.disconnectDevice(props.device);
   };
 
   return (
