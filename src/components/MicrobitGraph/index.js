@@ -9,6 +9,7 @@ import {
 } from 'semantic-ui-react';
 import PlayButton from './components/PlayButton';
 import SaveDataButton from './components/SaveData';
+import DisconnectMicroButton from './components/DisconnectMicroButton';
 import BrushChart from './components/BrushChart';
 import moment from 'moment';
 import Title from './components/Title';
@@ -34,6 +35,8 @@ class MicrobitGraph extends Component {
                     csvData={this.props.csvData}
                     fileName={'microbit-usb-data-' + moment().format('MM-DD')}
                   />
+
+                  <DisconnectMicroButton disconnectDevice={this.props.disconnectDevice} />
               
                   <Statistic
                     size="mini"

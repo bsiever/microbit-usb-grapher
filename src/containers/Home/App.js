@@ -7,6 +7,7 @@ import { AddMicroButton } from '../../components/AddMicroButton';
 import { uBitDisconnect } from '../../utils/microbit-api';
 import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
+import { testMicro } from '../../microbit-test/testbit';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,38 +17,40 @@ class App extends React.Component {
       devices: {},
       isRunning: false,
       microbitsConnected: 3,
-      graphs: [
-        {
-          title: 'Test1',
-          isRunning: false,
-          timeElapsed: 0,
-          series: [
-            {
-              data: ['100', '200', '400'],
-            },
-          ],
-        },
-        {
-          title: 'Test2',
-          isRunning: false,
-          timeElapsed: 0,
-          series: [
-            {
-              data: ['100', '200', '400'],
-            },
-          ],
-        },
-        {
-          title: 'Test3',
-          isRunning: false,
-          timeElapsed: 0,
-          series: [
-            {
-              data: ['100', '200', '400'],
-            },
-          ],
-        },
-      ],
+      graphs: [],
+      // [
+      //   {
+      //     deviceSerial: '',
+      //     title: 'Test1',
+      //     isRunning: false,
+      //     timeElapsed: 0,
+      //     series: [
+      //       {
+      //         data: ['100', '200', '400'],
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     title: 'Test2',
+      //     isRunning: false,
+      //     timeElapsed: 0,
+      //     series: [
+      //       {
+      //         data: ['100', '200', '400'],
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     title: 'Test3',
+      //     isRunning: false,
+      //     timeElapsed: 0,
+      //     series: [
+      //       {
+      //         data: ['100', '200', '400'],
+      //       },
+      //     ],
+      //   },
+      // ],
       options: {
         chart: {
           id: 'chart2',
@@ -120,22 +123,41 @@ class App extends React.Component {
       seconds: 0,
     };
 
-    this.coolCallBack = this.coolCallBack.bind(this);
+    this.microbitCallBack = this.microbitCallBack.bind(this);
   }
 
-  coolCallBack(type, device, data) {
+  microbitCallBack(type, device, data) {
     if (type === 'connected') {
       let devices = this.state.devices;
-      devices[device.productName] = device;
+      devices[device.serialNumber] = device;
       this.setState({ devices: devices });
+      this.createGraph(device);
     }
   }
 
   disconnectDevice(device) {
     uBitDisconnect(device);
     let devices = this.state.devices;
-    delete devices[device.productName];
+    delete devices[device.serialNumber];
     this.setState({ devices: devices });
+  }
+
+  createGraph(device) {
+    if (this.state.graphs[device.serialNumber] === undefined) {
+      let graphs = this.state.graphs;
+      graphs[device.serialNumber] = {
+        deviceSerial: device.serialNumber,
+        title: 'Micro:bit Graph ' + device.vendorId,
+        isRunning: false,
+        timeElapsed: 0,
+        series: [
+          {
+            data: [],
+          },
+        ],
+      };
+      this.setState({ graphs: graphs });
+    }
   }
 
   contextRef = createRef();
@@ -151,12 +173,13 @@ class App extends React.Component {
       this.state.devices
     ).map((deviceName) => (
       <Button
+        size="big"
         onClick={this.disconnectDevice.bind(
           this,
           this.state.devices[deviceName]
         )}
       >
-        Disconnect Device: {deviceName}{' '}
+        Disconnect Device: {deviceName}
       </Button>
     ));
 
@@ -164,20 +187,20 @@ class App extends React.Component {
       <div>
         <Header as="h2" icon inverted textAlign="center">
           <Icon name="line graph" />
-          Micro: bit USB Grapher{' '}
+          Micro: bit USB Grapher
           <Header.Subheader>
             Collect and graph data on one or more Micro: bits!
-          </Header.Subheader>{' '}
-        </Header>{' '}
+          </Header.Subheader>
+        </Header>
         <Divider />
         <StickyStatistics
           microbitsConnected={this.state.microbitsConnected}
           timeElapsed={this.state.timeElapsed}
         />
         <Container>
-          <AddMicroButton onAddComplete={this.coolCallBack} />{' '}
-          {disconnectButtons}{' '}
-          {this.state.graphs.map((g, index) => {
+          <AddMicroButton onAddComplete={this.microbitCallBack} />
+          {disconnectButtons}
+          {this.state.graphs.map((key, value, g, index) => {
             return (
               <div>
                 <MicrobitGraph
@@ -199,11 +222,12 @@ class App extends React.Component {
                       graphs: updatedGraphs,
                     });
                   }}
-                />{' '}
+                  disconnectDevice={this.disconnectDevice}
+                />
               </div>
             );
-          })}{' '}
-        </Container>{' '}
+          })}
+        </Container>
       </div>
     );
   }
