@@ -178,14 +178,11 @@ class App extends React.Component {
                     areaHeight={this.state.areaHeight}
                     isRunning={graphs[key].isRunning}
                     playOnClick={() => {
-                      let updatedGraphs = JSON.parse(
-                        JSON.stringify(this.state.graphs)
-                      );
-                      updatedGraphs[index].isRunning = graphs[key].isRunning
+                      graphs[key].isRunning = false
                         ? false
                         : true;
                       this.setState({
-                        graphs: updatedGraphs,
+                        graphs: graphs,
                       });
                     }}
                     disconnectDevice={this.disconnectDevice.bind(this)}
