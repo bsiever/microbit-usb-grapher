@@ -1,3 +1,7 @@
+# Launch our App! 
+
+[Go!](https://www.csl.mtu.edu/classes/cs4760/www/projects/s20/group6/www/app/index.html)
+
 # Micro:bit USB Grapher
 
 A WebPage/Site that can graph data collected on the micro:bit. 
