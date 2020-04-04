@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/microbit-usb-grapher/static/css/main.72971709.chunk.css",
-    "main.js": "/microbit-usb-grapher/static/js/main.3229c039.chunk.js",
-    "main.js.map": "/microbit-usb-grapher/static/js/main.3229c039.chunk.js.map",
-    "runtime-main.js": "/microbit-usb-grapher/static/js/runtime-main.efdacf8f.js",
-    "runtime-main.js.map": "/microbit-usb-grapher/static/js/runtime-main.efdacf8f.js.map",
-    "static/js/2.461d3784.chunk.js": "/microbit-usb-grapher/static/js/2.461d3784.chunk.js",
-    "static/js/2.461d3784.chunk.js.map": "/microbit-usb-grapher/static/js/2.461d3784.chunk.js.map",
-    "index.html": "/microbit-usb-grapher/index.html",
-    "precache-manifest.5ff1810bff9db22aa0c21518553a52cc.js": "/microbit-usb-grapher/precache-manifest.5ff1810bff9db22aa0c21518553a52cc.js",
-    "service-worker.js": "/microbit-usb-grapher/service-worker.js",
-    "static/css/main.72971709.chunk.css.map": "/microbit-usb-grapher/static/css/main.72971709.chunk.css.map",
-    "static/js/2.461d3784.chunk.js.LICENSE": "/microbit-usb-grapher/static/js/2.461d3784.chunk.js.LICENSE"
+    "main.css": "/microbit-usb-grapher-deploy/static/css/main.72971709.chunk.css",
+    "main.js": "/microbit-usb-grapher-deploy/static/js/main.7954b577.chunk.js",
+    "main.js.map": "/microbit-usb-grapher-deploy/static/js/main.7954b577.chunk.js.map",
+    "runtime-main.js": "/microbit-usb-grapher-deploy/static/js/runtime-main.bd6c8a08.js",
+    "runtime-main.js.map": "/microbit-usb-grapher-deploy/static/js/runtime-main.bd6c8a08.js.map",
+    "static/js/2.461d3784.chunk.js": "/microbit-usb-grapher-deploy/static/js/2.461d3784.chunk.js",
+    "static/js/2.461d3784.chunk.js.map": "/microbit-usb-grapher-deploy/static/js/2.461d3784.chunk.js.map",
+    "index.html": "/microbit-usb-grapher-deploy/index.html",
+    "precache-manifest.91b782d451afec5c32ae120d39da4304.js": "/microbit-usb-grapher-deploy/precache-manifest.91b782d451afec5c32ae120d39da4304.js",
+    "service-worker.js": "/microbit-usb-grapher-deploy/service-worker.js",
+    "static/css/main.72971709.chunk.css.map": "/microbit-usb-grapher-deploy/static/css/main.72971709.chunk.css.map",
+    "static/js/2.461d3784.chunk.js.LICENSE": "/microbit-usb-grapher-deploy/static/js/2.461d3784.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.efdacf8f.js",
+    "static/js/runtime-main.bd6c8a08.js",
     "static/js/2.461d3784.chunk.js",
     "static/css/main.72971709.chunk.css",
-    "static/js/main.3229c039.chunk.js"
+    "static/js/main.7954b577.chunk.js"
   ]
 }
