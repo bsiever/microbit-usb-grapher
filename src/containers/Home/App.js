@@ -96,8 +96,20 @@ class App extends React.Component {
     if (type === 'connected') {
       let devices = this.state.devices;
       devices[device.serialNumber] = device;
-      this.setState({ devices: devices });
       this.createGraph(device);
+    }
+    else if (type === "graph-data") {
+      let deviceGraphs = Object.assign(this.state.graphs)
+      if (deviceGraphs[device.serialNumber].series.data === undefined) {
+        // WHY IS THIS A STRING!!!!
+        deviceGraphs[device.serialNumber].series.data = [data.data] 
+      }
+      else {
+        deviceGraphs[device.serialNumber].series.data.push(data.data)
+      }
+      this.setState({
+        graphs: deviceGraphs 
+      })
     }
   }
 
@@ -124,7 +136,7 @@ class App extends React.Component {
         timeElapsed: 0,
         series: [
           {
-            data: [],
+            data: new Array(),
           },
         ],
       };
@@ -178,10 +190,9 @@ class App extends React.Component {
                     areaHeight={this.state.areaHeight}
                     isRunning={graphs[key].isRunning}
                     playOnClick={() => {
-                      let updatedGraphs = JSON.parse(
-                        JSON.stringify(this.state.graphs)
-                      );
-                      updatedGraphs[index].isRunning = graphs[key].isRunning
+                      let updatedGraphs = Object.assign(this.state.graphs)
+                      console.log(updatedGraphs)
+                      updatedGraphs[key].isRunning = graphs[key].isRunning
                         ? false
                         : true;
                       this.setState({
