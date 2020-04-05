@@ -1,6 +1,6 @@
 # Launch our App! 
 
-[Go!](https://www.csl.mtu.edu/classes/cs4760/www/projects/s20/group6/www/app/index.html)
+[Go!](http://bdsearle.github.io/microbit-usb-grapher-deploy)
 
 # Micro:bit USB Grapher
 
