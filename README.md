@@ -1,3 +1,7 @@
+# Launch our App! 
+
+[Go!](http://bdsearle.github.io/microbit-usb-grapher-deploy)
+
 # Micro:bit USB Grapher
 
 A WebPage/Site that can graph data collected on the micro:bit. 

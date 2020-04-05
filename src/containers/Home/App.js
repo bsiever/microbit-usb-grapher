@@ -191,12 +191,11 @@ class App extends React.Component {
                     isRunning={graphs[key].isRunning}
                     playOnClick={() => {
                       let updatedGraphs = Object.assign(this.state.graphs)
-                      console.log(updatedGraphs)
                       updatedGraphs[key].isRunning = graphs[key].isRunning
                         ? false
                         : true;
                       this.setState({
-                        graphs: updatedGraphs,
+                        graphs: graphs,
                       });
                     }}
                     disconnectDevice={this.disconnectDevice.bind(this)}
