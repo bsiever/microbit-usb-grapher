@@ -41,17 +41,14 @@ class App extends React.Component {
           size: 0,
         },
         xaxis: {
-          type: 'date',
           categories: [],
+          type: 'datetime',
         },
       },
 
       seriesLine: [
         {
           data: [
-            '2019-11-30T08:17:24.220Z',
-            '2019-12-30T08:17:24.220Z',
-            '2020-1-30T08:17:24.220Z',
           ],
         },
       ],
@@ -77,7 +74,7 @@ class App extends React.Component {
           },
         },
         xaxis: {
-          type: 'date',
+          type: 'datetime',
           tooltip: {
             enabled: false,
           },
@@ -99,16 +96,20 @@ class App extends React.Component {
       this.createGraph(device);
     }
     else if (type === "graph-data") {
-      let deviceGraphs = Object.assign(this.state.graphs)
+      let deviceGraphs = Object.assign(this.state.graphs);
+      let graphOptions = Object.assign(this.state.options);
       if (deviceGraphs[device.serialNumber].series.data === undefined) {
-        // WHY IS THIS A STRING!!!!
-        deviceGraphs[device.serialNumber].series.data = [data.data] 
+        deviceGraphs[device.serialNumber].series.data =  [{x: data.time.getTime(), y: data.data}]; //[data.data] 
       }
       else {
-        deviceGraphs[device.serialNumber].series.data.push(data.data)
+        deviceGraphs[device.serialNumber].series.data.push({y: data.data, x: data.time.getTime()});
       }
+      if (graphOptions.length === 0) graphOptions.xaxis.categories = [data.time] // I think object.assign is casting things to strings
+      else graphOptions.xaxis.categories.push(data.time)
       this.setState({
-        graphs: deviceGraphs 
+        graphs: deviceGraphs,
+        options: graphOptions,
+        seriesLine: [{data: deviceGraphs[device.serialNumber].series.data}]
       })
     }
   }
@@ -136,6 +137,7 @@ class App extends React.Component {
         timeElapsed: 0,
         series: [
           {
+            name: `data for: ${device.vendorId}`,
             data: new Array(),
           },
         ],
