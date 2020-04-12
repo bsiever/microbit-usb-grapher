@@ -7,6 +7,7 @@ import { AddMicroButton } from '../../components/AddMicroButton';
 import { uBitDisconnect } from '../../utils/microbit-api';
 import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
+import Chart from 'react-apexcharts';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,73 +18,7 @@ class App extends React.Component {
       isRunning: false,
       microbitsConnected: 0,
       graphs: [],
-      options: {
-        chart: {
-          id: 'chart2',
-          type: 'line',
-          height: 230,
-          toolbar: {
-            autoSelected: 'pan',
-            show: false,
-          },
-        },
-        colors: ['#546E7A'],
-        stroke: {
-          width: 3,
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        fill: {
-          opacity: 1,
-        },
-        markers: {
-          size: 0,
-        },
-        xaxis: {
-          categories: [],
-          type: 'datetime',
-        },
-      },
-
-      seriesLine: [
-        {
-          data: [
-          ],
-        },
-      ],
-      optionsLine: {
-        chart: {
-          id: 'chart1',
-          height: 130,
-          type: 'area',
-          brush: {
-            target: 'chart2',
-            enabled: true,
-          },
-          selection: {
-            enabled: true,
-          },
-        },
-        colors: ['#008FFB'],
-        fill: {
-          type: 'gradient',
-          gradient: {
-            opacityFrom: 0.91,
-            opacityTo: 0.1,
-          },
-        },
-        xaxis: {
-          type: 'datetime',
-          tooltip: {
-            enabled: false,
-          },
-        },
-        yaxis: {
-          tickAmount: 2,
-        },
-      },
-      seconds: 0,
+      seconds: 0,      
     };
 
     this.microbitCallBack = this.microbitCallBack.bind(this);
@@ -93,24 +28,41 @@ class App extends React.Component {
     if (type === 'connected') {
       let devices = this.state.devices;
       devices[device.serialNumber] = device;
+      this.setState({ devices: devices });
       this.createGraph(device);
     }
-    else if (type === "graph-data") {
-      let deviceGraphs = Object.assign(this.state.graphs);
-      let graphOptions = Object.assign(this.state.options);
-      if (deviceGraphs[device.serialNumber].series.data === undefined) {
-        deviceGraphs[device.serialNumber].series.data =  [{x: data.time.getTime(), y: data.data}]; //[data.data] 
-      }
-      else {
-        deviceGraphs[device.serialNumber].series.data.push({y: data.data, x: data.time.getTime()});
-      }
-      if (graphOptions.length === 0) graphOptions.xaxis.categories = [data.time] // I think object.assign is casting things to strings
-      else graphOptions.xaxis.categories.push(data.time)
+
+    let graphs = this.state.graphs;
+    let seriesData = data;
+
+    if (
+      graphs[device.serialNumber] !== undefined &&
+      graphs[device.serialNumber] !== null &&
+      graphs[device.serialNumber].series !== undefined &&
+      graphs[device.serialNumber].series !== null &&
+      seriesData !== null &&
+      seriesData !== undefined &&
+      seriesData.data !== undefined &&
+      seriesData.data !== undefined
+    ) {
+      let specificGraph = graphs[device.serialNumber];
+      let series = graphs[device.serialNumber].series[0];
+      series.data.push(seriesData.data.toString());
+      let updatedGraph = [...graphs];
+      updatedGraph[device.serialNumber] = {
+        ...updatedGraph[device.serialNumber],
+        deviceSerial: specificGraph.deviceSerial,
+        title: specificGraph.title,
+        isRunning: specificGraph.isRunning,
+        timeElapsed: specificGraph.timeElapsed,
+        series: [series],
+        options: specificGraph.options,
+        seriesLine: specificGraph.seriesLine,
+        optionsLine: specificGraph.optionsLine,
+      };
       this.setState({
-        graphs: deviceGraphs,
-        options: graphOptions,
-        seriesLine: [{data: deviceGraphs[device.serialNumber].series.data}]
-      })
+        graphs: updatedGraph,
+      });
     }
   }
 
@@ -137,10 +89,74 @@ class App extends React.Component {
         timeElapsed: 0,
         series: [
           {
-            name: `data for: ${device.vendorId}`,
-            data: new Array(),
+            data: [],
           },
         ],
+        options: {
+          chart: {
+            id: 'chart2',
+            type: 'line',
+            height: 230,
+            toolbar: {
+              autoSelected: 'pan',
+              show: false,
+            },
+          },
+          colors: ['#546E7A'],
+          stroke: {
+            width: 3,
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          fill: {
+            opacity: 1,
+          },
+          markers: {
+            size: 0,
+          },
+          xaxis: {
+            type: 'date',
+            categories: [],
+          },
+        },
+
+        seriesLine: [
+          {
+            data: [],
+          },
+        ],
+        optionsLine: {
+          chart: {
+            id: 'chart1',
+            height: 130,
+            type: 'area',
+            brush: {
+              target: 'chart2',
+              enabled: true,
+            },
+            selection: {
+              enabled: true,
+            },
+          },
+          colors: ['#008FFB'],
+          fill: {
+            type: 'gradient',
+            gradient: {
+              opacityFrom: 0.91,
+              opacityTo: 0.1,
+            },
+          },
+          xaxis: {
+            type: 'date',
+            tooltip: {
+              enabled: false,
+            },
+          },
+          yaxis: {
+            tickAmount: 2,
+          },
+        },
       };
       this.setState({
         graphs: graphs,
@@ -184,18 +200,15 @@ class App extends React.Component {
                     device={this.state.devices[key]}
                     title={graphs[key].title}
                     csvData={csvData}
-                    options={this.state.options}
+                    options={graphs[key].options}
                     series={graphs[key].series}
-                    optionsLine={this.state.optionsLine}
-                    seriesLine={this.state.seriesLine}
-                    height={this.state.height}
-                    areaHeight={this.state.areaHeight}
+                    optionsLine={graphs[key].optionsLine}
+                    seriesLine={graphs[key].seriesLine}
+                    height={graphs[key].height}
+                    areaHeight={graphs[key].areaHeight}
                     isRunning={graphs[key].isRunning}
                     playOnClick={() => {
-                      let updatedGraphs = Object.assign(this.state.graphs)
-                      updatedGraphs[key].isRunning = graphs[key].isRunning
-                        ? false
-                        : true;
+                      graphs[key].isRunning = false ? false : true;
                       this.setState({
                         graphs: graphs,
                       });
