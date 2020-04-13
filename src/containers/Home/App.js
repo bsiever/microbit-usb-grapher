@@ -8,6 +8,7 @@ import { uBitDisconnect } from '../../utils/microbit-api';
 import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
 import Chart from 'react-apexcharts';
+import HelpButton from '../../components/HelpInstructions';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class App extends React.Component {
       isRunning: false,
       microbitsConnected: 0,
       graphs: [],
-      seconds: 0,      
+      seconds: 0,
     };
 
     this.microbitCallBack = this.microbitCallBack.bind(this);
@@ -185,6 +186,11 @@ class App extends React.Component {
             Collect and graph data on one or more Micro: bits!
           </Header.Subheader>
         </Header>
+
+        <Container textAlign="right">
+          <HelpButton />
+        </Container>
+
         <Divider />
         <StickyStatistics
           microbitsConnected={this.state.microbitsConnected}
