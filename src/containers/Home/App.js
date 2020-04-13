@@ -1,13 +1,11 @@
 import React, { createRef } from 'react';
 import '../../styles/App.css';
-import { Container, Divider, Menu } from 'semantic-ui-react';
+import { Container, Menu } from 'semantic-ui-react';
 import { Header, Icon } from 'semantic-ui-react';
-import { SideNav } from '../../components/SideNav';
 import { AddMicroButton } from '../../components/AddMicroButton';
 import { uBitDisconnect } from '../../utils/microbit-api';
 import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
-import Chart from 'react-apexcharts';
 import HelpButton from '../../components/HelpInstructions';
 import './App.css';
 
@@ -21,10 +19,19 @@ class App extends React.Component {
       microbitsConnected: 0,
       graphs: [],
       seconds: 0,
-      activeTab: 'Micro:bit Graph 1',
+      activeTab: 'Microbit Graph 1',
     };
 
     this.microbitCallBack = this.microbitCallBack.bind(this);
+  }
+
+  convertLetterToNumber(str) {
+    var out = 0,
+      len = str.length;
+    for (var pos = 0; pos < len; pos++) {
+      out += (str.charCodeAt(pos) - 64) * Math.pow(26, len - pos - 1);
+    }
+    return out;
   }
 
   microbitCallBack(type, device, data) {
@@ -54,6 +61,10 @@ class App extends React.Component {
     ) {
       let specificGraph = graphs[device.serialNumber];
       let series = graphs[device.serialNumber].series[0];
+      if (isNaN(seriesData.data)) {
+        seriesData.data = this.convertLetterToNumber(seriesData.data);
+      }
+      seriesData.data = Math.round(10 * seriesData.data) / 10; // round to the nearest tenth
       series.data.push(seriesData.data.toString());
       let updatedGraph = [...graphs];
       updatedGraph[device.serialNumber] = {
@@ -91,7 +102,7 @@ class App extends React.Component {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
         deviceSerial: device.serialNumber,
-        title: 'Micro:bit Graph ' + (this.state.microbitsConnected + 1),
+        title: 'Microbit Graph ' + (this.state.microbitsConnected + 1),
         isRunning: false,
         timeElapsed: 0,
         series: [
@@ -223,7 +234,12 @@ class App extends React.Component {
         />
         <Container>
           {Object.keys(graphs).map((key, index) => {
-            if (this.state.activeTab === graphs[key].title) {
+            if (
+              this.state.activeTab === graphs[key].title &&
+              graphs[key].title &&
+              graphs[key].options &&
+              graphs[key].series
+            ) {
               return (
                 <div>
                   <MicrobitGraph

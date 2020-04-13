@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 /*
  * JavaScript functions for interacting with micro:bit microcontrollers over WebUSB
@@ -57,7 +58,7 @@ function uBitOpenDevice(device, callback) {
         device.controlTransferOut(DAPOutReportRequest, Uint8Array.from([0x83])) // DAP ID_DAP_Vendor3: https://github.com/ARMmbed/DAPLink/blob/0711f11391de54b13dc8a628c80617ca5d25f070/source/daplink/cmsis-dap/DAP_vendor.c
           .then(() => device.controlTransferIn(DAPInReportRequest, 64))
           .then((data) => { 
-            if (data.status != "ok") {
+            if (data.status !== "ok") {
                 return Promise.delay(uBitBadMessageDelay).then(transferLoop);
             }
             // First byte is echo of get UART command: Ignore it
@@ -68,7 +69,7 @@ function uBitOpenDevice(device, callback) {
 
             // Data: Process and get more
             let len = arr[1]  // Second byte is length of remaining message
-            if(len==0) // If no data: Delay
+            if(len===0) // If no data: Delay
                 return Promise.delay(uBitIncompleteMessageDelay).then(transferLoop)
             
             let msg = arr.slice(2,2+len)  // Get the actual UART bytes

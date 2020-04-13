@@ -3,7 +3,7 @@ import { Container, Table, Divider, Statistic, Icon } from 'semantic-ui-react';
 import PlayButton from './components/PlayButton';
 import SaveDataButton from './components/SaveData';
 import DisconnectMicroButton from './components/DisconnectMicroButton';
-import BrushChart from './components/BrushChart';
+import { BrushChart } from './components/BrushChart/BrushChart';
 import moment from 'moment';
 import Title from './components/Title';
 
@@ -44,13 +44,17 @@ class MicrobitGraph extends Component {
                   </Statistic>
                 </Table.Cell>
                 <Table.Cell>
-                  <BrushChart
+                  {/* <BrushChart
                     options={this.props.options}
                     series={this.props.series}
                     optionsLine={this.props.optionsLine}
                     seriesLine={this.props.seriesLine}
                     height={this.props.height}
                     areaHeight={this.props.areaHeight}
+                  /> */}
+                  <BrushChart
+                    series={this.props.series}
+                    runRealtimeData={this.props.isRunning}
                   />
                 </Table.Cell>
               </Table.Row>

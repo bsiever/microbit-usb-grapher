@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Confirm } from 'semantic-ui-react';
-import { render } from '@testing-library/react';
 
 export class DisconnectMicroButton extends Component {
   disconnectMicro = () => {
