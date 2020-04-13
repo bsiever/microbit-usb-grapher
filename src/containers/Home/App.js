@@ -19,6 +19,7 @@ class App extends React.Component {
       isRunning: false,
       microbitsConnected: 0,
       graphs: [],
+      graphsLength: 0,
       seconds: 0,
       activeTab: 'Micro:bit Graph 1',
     };
@@ -90,7 +91,7 @@ class App extends React.Component {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
         deviceSerial: device.serialNumber,
-        title: 'Micro:bit Graph ' + (this.state.graphs.length + 1).toString(),
+        title: 'Micro:bit Graph ' + (this.state.graphsLegth + 1).toString(),
         isRunning: false,
         timeElapsed: 0,
         series: [
@@ -166,6 +167,7 @@ class App extends React.Component {
       };
       this.setState({
         graphs: graphs,
+        graphsLegth: (this.state.graphsLegth + 1),
         microbitsConnected: this.state.microbitsConnected + 1,
       });
     }
@@ -195,7 +197,7 @@ class App extends React.Component {
           </Header.Subheader>
         </Header>
 
-        <Container textAlign="right" style={{marginBottom: '-46px'}}>
+        <Container textAlign="right" style={{ marginBottom: '-46px' }}>
           <HelpButton />
         </Container>
 
@@ -221,36 +223,35 @@ class App extends React.Component {
           timeElapsed={this.state.timeElapsed}
         />
         <Container>
-          {graphs &&
-            Object.keys(graphs).map((key, index) => {
-              if (this.state.activeTab === graphs[key].title) {
-                return (
-                  <div>
-                    <MicrobitGraph
-                      device={this.state.devices[key]}
-                      title={graphs[key].title}
-                      csvData={csvData}
-                      options={graphs[key].options}
-                      series={graphs[key].series}
-                      optionsLine={graphs[key].optionsLine}
-                      seriesLine={graphs[key].seriesLine}
-                      height={graphs[key].height}
-                      areaHeight={graphs[key].areaHeight}
-                      isRunning={graphs[key].isRunning}
-                      playOnClick={() => {
-                        graphs[key].isRunning = false ? false : true;
-                        this.setState({
-                          graphs: graphs,
-                        });
-                      }}
-                      disconnectDevice={this.disconnectDevice.bind(this)}
-                    />
-                  </div>
-                );
-              } else {
-                return <div />;
-              }
-            })}
+          {Object.keys(graphs).map((key, index) => {
+            if (this.state.activeTab === graphs[key].title) {
+              return (
+                <div>
+                  <MicrobitGraph
+                    device={this.state.devices[key]}
+                    title={graphs[key].title}
+                    csvData={csvData}
+                    options={graphs[key].options}
+                    series={graphs[key].series}
+                    optionsLine={graphs[key].optionsLine}
+                    seriesLine={graphs[key].seriesLine}
+                    height={graphs[key].height}
+                    areaHeight={graphs[key].areaHeight}
+                    isRunning={graphs[key].isRunning}
+                    playOnClick={() => {
+                      graphs[key].isRunning = false ? false : true;
+                      this.setState({
+                        graphs: graphs,
+                      });
+                    }}
+                    disconnectDevice={this.disconnectDevice.bind(this)}
+                  />
+                </div>
+              );
+            } else {
+              return <div />;
+            }
+          })}
         </Container>
       </div>
     );
