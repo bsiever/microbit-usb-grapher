@@ -9,6 +9,7 @@ import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
 import Chart from 'react-apexcharts';
 import HelpButton from '../../components/HelpInstructions';
+import './App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,7 +20,6 @@ class App extends React.Component {
       isRunning: false,
       microbitsConnected: 0,
       graphs: [],
-      graphsLength: 0,
       seconds: 0,
       activeTab: 'Micro:bit Graph 1',
     };
@@ -91,7 +91,7 @@ class App extends React.Component {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
         deviceSerial: device.serialNumber,
-        title: 'Micro:bit Graph ' + (this.state.graphsLength + 1),
+        title: 'Micro:bit Graph ' + (this.state.microbitsConnected + 1),
         isRunning: false,
         timeElapsed: 0,
         series: [
@@ -167,7 +167,6 @@ class App extends React.Component {
       };
       this.setState({
         graphs: graphs,
-        graphsLegth: (this.state.graphsLength + 1),
         microbitsConnected: this.state.microbitsConnected + 1,
       });
     }
@@ -206,7 +205,7 @@ class App extends React.Component {
         </Container>
 
         <Container textAlign="left" style={{ marginTop: '10px' }}>
-          <Menu attached="top" tabular>
+          <Menu attached="top" id="tabView" tabular>
             {Object.keys(graphs).map((key, index) => {
               return (
                 <Menu.Item
