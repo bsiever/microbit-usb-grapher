@@ -1,10 +1,18 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import { Icon, Button, Modal, Accordion } from 'semantic-ui-react';
+import {
+  Icon,
+  Button,
+  Modal,
+  Accordion,
+  Header,
+  Divider,
+} from 'semantic-ui-react';
 import pdf from './instructions/MicrobitWebUSBGrapher-Instructions.pdf';
 
 class HelpButton extends Component {
-  state = { open: false, activeIndex: 0 };
+  state = { open: false, activeIndex: -1 };
 
   closeConfigShow = (closeOnEscape, closeOnDimmerClick) => () => {
     this.setState({ closeOnEscape, closeOnDimmerClick, open: true });
@@ -40,18 +48,40 @@ class HelpButton extends Component {
           onClose={this.close}
           closeIcon
         >
-          <Modal.Header>Instructions</Modal.Header>
+          <Modal.Header style={{ color: '#FFF', backgroundColor: '#252839' }}>
+            Micro:bit and Application Help
+          </Modal.Header>
           <Modal.Content>
-            <Accordion>
+            <Header>
+              Instructions:{' '}
+              <a target="_blank" rel="noopener noreferrer" href={pdf}>
+                Click to Download PDF
+              </a>
+            </Header>
+            <Divider />
+            <Header>Frequently Asked Questions (FAQ):</Header>
+            <Accordion styled fluid>
               <Accordion.Title
                 active={activeIndex === 0}
                 index={0}
                 onClick={this.handleClick}
               >
                 <Icon name="dropdown" />
-                How to pair a Micro:bit device?
+                How to use the Micro:bit WebUSB Grapher?
               </Accordion.Title>
               <Accordion.Content active={activeIndex === 0}>
+                <iframe src={pdf} height="900" width="900" />
+              </Accordion.Content>
+
+              <Accordion.Title
+                active={activeIndex === 1}
+                index={1}
+                onClick={this.handleClick}
+              >
+                <Icon name="dropdown" />
+                How to pair a Micro:bit device?
+              </Accordion.Title>
+              <Accordion.Content active={activeIndex === 1}>
                 <div class="ui grid stackable">
                   <div class="column five wide firmware">
                     <strong class="ui small">
@@ -129,20 +159,6 @@ class HelpButton extends Component {
                     </div>
                   </div>
                 </div>
-              </Accordion.Content>
-
-              <Accordion.Title
-                active={activeIndex === 1}
-                index={1}
-                onClick={this.handleClick}
-              >
-                <Icon name="dropdown" />
-                How to use the Micro:bit WebUSB Grapher?
-              </Accordion.Title>
-              <Accordion.Content active={activeIndex === 1}>
-                <a target="_blank" rel="noopener noreferrer" href={pdf}>
-                  Click to Download PDF
-                </a>
               </Accordion.Content>
               <Accordion.Title
                 active={activeIndex === 2}
