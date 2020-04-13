@@ -19,7 +19,6 @@ class App extends React.Component {
       isRunning: false,
       microbitsConnected: 0,
       graphs: [],
-      graphsLength: 0,
       seconds: 0,
       activeTab: 'Micro:bit Graph 1',
     };
@@ -91,7 +90,7 @@ class App extends React.Component {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
         deviceSerial: device.serialNumber,
-        title: 'Micro:bit Graph ' + (this.state.graphsLength + 1),
+        title: 'Micro:bit Graph ' + (this.state.microbitsConnected + 1),
         isRunning: false,
         timeElapsed: 0,
         series: [
@@ -167,7 +166,6 @@ class App extends React.Component {
       };
       this.setState({
         graphs: graphs,
-        graphsLegth: (this.state.graphsLength + 1),
         microbitsConnected: this.state.microbitsConnected + 1,
       });
     }
