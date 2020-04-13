@@ -1,14 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import {
-  Icon,
-  Button,
-  Modal,
-  Accordion,
-  Image,
-  Embed,
-} from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Icon, Button, Modal, Accordion } from 'semantic-ui-react';
+import pdf from './instructions/MicrobitWebUSBGrapher-Instructions.pdf';
 
 class HelpButton extends Component {
   state = { open: false, activeIndex: 0 };
@@ -70,6 +63,7 @@ class HelpButton extends Component {
                     <a
                       href="https://makecode.microbit.org/device/usb/webusb/troubleshoot"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Check your firmware version here and update if needed
                     </a>
@@ -146,8 +140,8 @@ class HelpButton extends Component {
                 How to use the Micro:bit WebUSB Grapher?
               </Accordion.Title>
               <Accordion.Content active={activeIndex === 1}>
-                <a href="/public/AppInstructions.pdf" download>
-                  Download PDF
+                <a target="_blank" rel="noopener noreferrer" href={pdf}>
+                  Click to Download PDF
                 </a>
               </Accordion.Content>
               <Accordion.Title
