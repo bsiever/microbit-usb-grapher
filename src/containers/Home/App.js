@@ -9,6 +9,7 @@ import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
 import Chart from 'react-apexcharts';
 import HelpButton from '../../components/HelpInstructions';
+import './App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -204,7 +205,7 @@ class App extends React.Component {
         </Container>
 
         <Container textAlign="left" style={{ marginTop: '10px' }}>
-          <Menu attached="top" tabular>
+          <Menu attached="top" id="tabView" tabular>
             {Object.keys(graphs).map((key, index) => {
               return (
                 <Menu.Item
