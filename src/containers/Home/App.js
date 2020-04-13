@@ -91,7 +91,7 @@ class App extends React.Component {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
         deviceSerial: device.serialNumber,
-        title: 'Micro:bit Graph ' + (this.state.graphsLegth + 1).toString(),
+        title: 'Micro:bit Graph ' + (this.state.graphsLength + 1),
         isRunning: false,
         timeElapsed: 0,
         series: [
@@ -167,7 +167,7 @@ class App extends React.Component {
       };
       this.setState({
         graphs: graphs,
-        graphsLegth: (this.state.graphsLegth + 1),
+        graphsLegth: (this.state.graphsLength + 1),
         microbitsConnected: this.state.microbitsConnected + 1,
       });
     }
