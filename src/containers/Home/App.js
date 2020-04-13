@@ -238,6 +238,9 @@ class App extends React.Component {
                     height={graphs[key].height}
                     areaHeight={graphs[key].areaHeight}
                     isRunning={graphs[key].isRunning}
+                    graphs={graphs}
+                    key={key}
+                    setState={this.setState}
                     playOnClick={() => {
                       graphs[key].isRunning = false ? false : true;
                       this.setState({

@@ -12,7 +12,7 @@ class MicrobitGraph extends Component {
     return (
       <div>
         <Container>
-          <Title title={this.props.title} />
+          <Title title={this.props.title} graphs={this.props.graphs} key={this.props.key} setState={this.props.setState} />
           <Table definition textAlign="center">
             <Table.Body>
               <Table.Row>
