@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import '../../styles/App.css';
-import { Container, Divider } from 'semantic-ui-react';
+import { Container, Divider, Menu } from 'semantic-ui-react';
 import { Header, Icon } from 'semantic-ui-react';
 import { SideNav } from '../../components/SideNav';
 import { AddMicroButton } from '../../components/AddMicroButton';
@@ -20,6 +20,7 @@ class App extends React.Component {
       microbitsConnected: 0,
       graphs: [],
       seconds: 0,
+      activeTab: 'Micro:bit Graph 1',
     };
 
     this.microbitCallBack = this.microbitCallBack.bind(this);
@@ -37,6 +38,10 @@ class App extends React.Component {
     let seriesData = data;
 
     if (
+      device !== undefined &&
+      device !== null &&
+      device.serialNumber !== undefined &&
+      device.serialNumber !== null &&
       graphs[device.serialNumber] !== undefined &&
       graphs[device.serialNumber] !== null &&
       graphs[device.serialNumber].series !== undefined &&
@@ -85,7 +90,7 @@ class App extends React.Component {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
         deviceSerial: device.serialNumber,
-        title: 'Micro:bit Graph ' + device.vendorId,
+        title: 'Micro:bit Graph ' + (this.state.graphs.length + 1).toString(),
         isRunning: false,
         timeElapsed: 0,
         series: [
@@ -166,6 +171,8 @@ class App extends React.Component {
     }
   }
 
+  handleItemClick = (e, { name }) => this.setState({ activeTab: name });
+
   contextRef = createRef();
 
   render() {
@@ -176,6 +183,7 @@ class App extends React.Component {
     });
 
     const graphs = this.state.graphs;
+    const { activeTab } = this.state;
 
     return (
       <div>
@@ -187,42 +195,61 @@ class App extends React.Component {
           </Header.Subheader>
         </Header>
 
-        <Container textAlign="right">
+        <Container textAlign="right" style={{marginBottom: '-46px'}}>
           <HelpButton />
         </Container>
 
-        <Divider />
+        <Container textAlign="left">
+          <AddMicroButton onAddComplete={this.microbitCallBack} />
+        </Container>
+
+        <Container textAlign="left" style={{ marginTop: '10px' }}>
+          <Menu attached="top" tabular>
+            {Object.keys(graphs).map((key, index) => {
+              return (
+                <Menu.Item
+                  name={graphs[key].title}
+                  active={activeTab === graphs[key].title}
+                  onClick={this.handleItemClick}
+                />
+              );
+            })}
+          </Menu>
+        </Container>
         <StickyStatistics
           microbitsConnected={this.state.microbitsConnected}
           timeElapsed={this.state.timeElapsed}
         />
         <Container>
-          <AddMicroButton onAddComplete={this.microbitCallBack} />
           {graphs &&
             Object.keys(graphs).map((key, index) => {
-              return (
-                <div>
-                  <MicrobitGraph
-                    device={this.state.devices[key]}
-                    title={graphs[key].title}
-                    csvData={csvData}
-                    options={graphs[key].options}
-                    series={graphs[key].series}
-                    optionsLine={graphs[key].optionsLine}
-                    seriesLine={graphs[key].seriesLine}
-                    height={graphs[key].height}
-                    areaHeight={graphs[key].areaHeight}
-                    isRunning={graphs[key].isRunning}
-                    playOnClick={() => {
-                      graphs[key].isRunning = false ? false : true;
-                      this.setState({
-                        graphs: graphs,
-                      });
-                    }}
-                    disconnectDevice={this.disconnectDevice.bind(this)}
-                  />
-                </div>
-              );
+              if (this.state.activeTab === graphs[key].title) {
+                return (
+                  <div>
+                    <MicrobitGraph
+                      device={this.state.devices[key]}
+                      title={graphs[key].title}
+                      csvData={csvData}
+                      options={graphs[key].options}
+                      series={graphs[key].series}
+                      optionsLine={graphs[key].optionsLine}
+                      seriesLine={graphs[key].seriesLine}
+                      height={graphs[key].height}
+                      areaHeight={graphs[key].areaHeight}
+                      isRunning={graphs[key].isRunning}
+                      playOnClick={() => {
+                        graphs[key].isRunning = false ? false : true;
+                        this.setState({
+                          graphs: graphs,
+                        });
+                      }}
+                      disconnectDevice={this.disconnectDevice.bind(this)}
+                    />
+                  </div>
+                );
+              } else {
+                return <div />;
+              }
             })}
         </Container>
       </div>
