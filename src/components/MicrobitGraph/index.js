@@ -76,6 +76,7 @@ class MicrobitGraph extends Component {
                     areaHeight={this.props.areaHeight}
                   /> */}
                   <BrushChart
+                    fake={this.props.fake}
                     series={this.props.series}
                     runRealtimeData={this.props.isRunning}
                     setCSVData={this.setCSVData}
