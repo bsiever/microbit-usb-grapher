@@ -4,7 +4,7 @@
 
 # Micro:bit USB Grapher
 
-A WebPage/Site that can graph data collected on the micro:bit. 
+A WebPage/Site that can graph, manipulate, and save data collected on the micro:bit. 
 
 ## Project Overview
 
