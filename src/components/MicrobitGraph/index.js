@@ -8,11 +8,34 @@ import moment from 'moment';
 import Title from './components/Title';
 
 class MicrobitGraph extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      csvData: [],
+    };
+    this.setCSVData = this.setCSVData.bind(this);
+  }
+
+  setCSVData(csvData) {
+    var updatedData = csvData.map(function(val, index) {
+      return { key: index, value: val };
+    });
+
+    this.setState({
+      csvData: updatedData,
+    });
+  }
+
   render() {
     return (
       <div>
         <Container>
-          <Title title={this.props.title} graphs={this.props.graphs} key={this.props.key} setState={this.props.setState} />
+          <Title
+            title={this.props.title}
+            graphs={this.props.graphs}
+            key={this.props.key}
+            setState={this.props.setState}
+          />
           <Table definition textAlign="center">
             <Table.Body>
               <Table.Row>
@@ -25,7 +48,7 @@ class MicrobitGraph extends Component {
                   <Divider hidden />
 
                   <SaveDataButton
-                    csvData={this.props.csvData}
+                    csvData={this.state.csvData}
                     fileName={'microbit-usb-data-' + moment().format('MM-DD')}
                   />
 
@@ -55,6 +78,7 @@ class MicrobitGraph extends Component {
                   <BrushChart
                     series={this.props.series}
                     runRealtimeData={this.props.isRunning}
+                    setCSVData={this.setCSVData}
                   />
                 </Table.Cell>
               </Table.Row>

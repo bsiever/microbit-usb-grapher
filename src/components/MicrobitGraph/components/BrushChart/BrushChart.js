@@ -127,6 +127,8 @@ export class BrushChart extends React.Component {
           },
         },
       });
+
+      this.props.setCSVData(this.state.series[0].data);
     } 
   }
 

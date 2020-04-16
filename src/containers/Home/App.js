@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import '../../styles/App.css';
-import { Container, Menu } from 'semantic-ui-react';
+import { Container, Menu, Button } from 'semantic-ui-react';
 import { Header, Icon } from 'semantic-ui-react';
 import { AddMicroButton } from '../../components/AddMicroButton';
 import { uBitDisconnect } from '../../utils/microbit-api';
@@ -8,6 +8,7 @@ import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
 import HelpButton from '../../components/HelpInstructions';
 import './App.css';
+import hexFile from './microbit-Serial-Data-Example.hex';
 
 class App extends React.Component {
   constructor(props) {
@@ -172,7 +173,7 @@ class App extends React.Component {
             },
           },
           yaxis: {
-            tickAmount: 2,
+            tickAmount: 1,
           },
         },
       };
@@ -188,11 +189,7 @@ class App extends React.Component {
   contextRef = createRef();
 
   render() {
-    var arr = [2, 5, 6, 3, 8, 9];
 
-    var csvData = arr.map(function(val, index) {
-      return { key: index, value: val * val };
-    });
 
     const graphs = this.state.graphs;
     const { activeTab } = this.state;
@@ -208,6 +205,20 @@ class App extends React.Component {
         </Header>
 
         <Container textAlign="right" style={{ marginBottom: '-46px' }}>
+          <Button
+            onClick={() => {
+              var element = document.createElement('a');
+              element.setAttribute('href', hexFile);
+              element.setAttribute('download', 'microbitProgram.hex');
+
+              document.body.appendChild(element);
+              element.click();
+              document.body.removeChild(element);
+            }}
+          >
+            Download Hex File
+          </Button>
+
           <HelpButton />
         </Container>
 
@@ -245,7 +256,6 @@ class App extends React.Component {
                   <MicrobitGraph
                     device={this.state.devices[key]}
                     title={graphs[key].title}
-                    csvData={csvData}
                     options={graphs[key].options}
                     series={graphs[key].series}
                     optionsLine={graphs[key].optionsLine}
@@ -257,9 +267,13 @@ class App extends React.Component {
                     key={key}
                     setState={this.setState}
                     playOnClick={() => {
-                      graphs[key].isRunning = false ? false : true;
+                      let updatedGraphs = Object.assign(this.state.graphs);
+                      updatedGraphs[key].isRunning = updatedGraphs[key]
+                        .isRunning
+                        ? false
+                        : true;
                       this.setState({
-                        graphs: graphs,
+                        graphs: updatedGraphs,
                       });
                     }}
                     disconnectDevice={this.disconnectDevice.bind(this)}
