@@ -1,6 +1,6 @@
 # Launch our App! 
 
-[Go!](https://bdsearle.github.io/microbit-usb-grapher)
+[Go!](https://bdsearle.github.io/microbit-usb-grapher-deploy)
 
 # Micro:bit USB Grapher
 
