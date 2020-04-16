@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/microbit-usb-grapher-deploy/static/css/main.a1625b6e.chunk.css",
-    "main.js": "/microbit-usb-grapher-deploy/static/js/main.eed71696.chunk.js",
-    "main.js.map": "/microbit-usb-grapher-deploy/static/js/main.eed71696.chunk.js.map",
-    "runtime-main.js": "/microbit-usb-grapher-deploy/static/js/runtime-main.bd6c8a08.js",
-    "runtime-main.js.map": "/microbit-usb-grapher-deploy/static/js/runtime-main.bd6c8a08.js.map",
-    "static/js/2.f942c0fd.chunk.js": "/microbit-usb-grapher-deploy/static/js/2.f942c0fd.chunk.js",
-    "static/js/2.f942c0fd.chunk.js.map": "/microbit-usb-grapher-deploy/static/js/2.f942c0fd.chunk.js.map",
-    "index.html": "/microbit-usb-grapher-deploy/index.html",
-    "precache-manifest.6650641f4c90f52142231bade4754a10.js": "/microbit-usb-grapher-deploy/precache-manifest.6650641f4c90f52142231bade4754a10.js",
-    "service-worker.js": "/microbit-usb-grapher-deploy/service-worker.js",
-    "static/css/main.a1625b6e.chunk.css.map": "/microbit-usb-grapher-deploy/static/css/main.a1625b6e.chunk.css.map",
-    "static/js/2.f942c0fd.chunk.js.LICENSE": "/microbit-usb-grapher-deploy/static/js/2.f942c0fd.chunk.js.LICENSE",
-    "static/media/MicrobitWebUSBGrapher-Instructions.pdf": "/microbit-usb-grapher-deploy/static/media/MicrobitWebUSBGrapher-Instructions.3fe99ffe.pdf",
-    "static/media/microbit-Serial-Data-Example.hex": "/microbit-usb-grapher-deploy/static/media/microbit-Serial-Data-Example.25a5d416.hex"
+    "main.css": "/microbit-usb-grapher/static/css/main.a1625b6e.chunk.css",
+    "main.js": "/microbit-usb-grapher/static/js/main.fbc7a054.chunk.js",
+    "main.js.map": "/microbit-usb-grapher/static/js/main.fbc7a054.chunk.js.map",
+    "runtime-main.js": "/microbit-usb-grapher/static/js/runtime-main.efdacf8f.js",
+    "runtime-main.js.map": "/microbit-usb-grapher/static/js/runtime-main.efdacf8f.js.map",
+    "static/js/2.f942c0fd.chunk.js": "/microbit-usb-grapher/static/js/2.f942c0fd.chunk.js",
+    "static/js/2.f942c0fd.chunk.js.map": "/microbit-usb-grapher/static/js/2.f942c0fd.chunk.js.map",
+    "index.html": "/microbit-usb-grapher/index.html",
+    "precache-manifest.b0d94b35d32f639ac25406208b2cd71a.js": "/microbit-usb-grapher/precache-manifest.b0d94b35d32f639ac25406208b2cd71a.js",
+    "service-worker.js": "/microbit-usb-grapher/service-worker.js",
+    "static/css/main.a1625b6e.chunk.css.map": "/microbit-usb-grapher/static/css/main.a1625b6e.chunk.css.map",
+    "static/js/2.f942c0fd.chunk.js.LICENSE": "/microbit-usb-grapher/static/js/2.f942c0fd.chunk.js.LICENSE",
+    "static/media/MicrobitWebUSBGrapher-Instructions.pdf": "/microbit-usb-grapher/static/media/MicrobitWebUSBGrapher-Instructions.3fe99ffe.pdf",
+    "static/media/microbit-Serial-Data-Example.hex": "/microbit-usb-grapher/static/media/microbit-Serial-Data-Example.25a5d416.hex"
   },
   "entrypoints": [
-    "static/js/runtime-main.bd6c8a08.js",
+    "static/js/runtime-main.efdacf8f.js",
     "static/js/2.f942c0fd.chunk.js",
     "static/css/main.a1625b6e.chunk.css",
-    "static/js/main.eed71696.chunk.js"
+    "static/js/main.fbc7a054.chunk.js"
   ]
 }
