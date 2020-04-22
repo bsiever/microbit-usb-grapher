@@ -11,14 +11,22 @@ class MicrobitGraph extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      seconds: 0,
       csvData: [],
     };
+    this.setSeconds = this.setSeconds.bind(this);
     this.setCSVData = this.setCSVData.bind(this);
+  }
+
+  setSeconds(seconds) {
+    this.setState({
+      seconds: seconds,
+    });
   }
 
   setCSVData(csvData) {
     var updatedData = csvData.map(function(val, index) {
-      return { key: index, value: val };
+      return { key: index + 1, value: val };
     });
 
     this.setState({
@@ -32,9 +40,7 @@ class MicrobitGraph extends Component {
         <Container>
           <Title
             title={this.props.title}
-            graphs={this.props.graphs}
-            key={this.props.key}
-            setState={this.props.setState}
+            handleSubmit={this.props.handleSubmit}
           />
           <Table definition textAlign="center">
             <Table.Body>
@@ -61,17 +67,17 @@ class MicrobitGraph extends Component {
 
                   <Statistic size="mini" style={{}}>
                     <Statistic.Value>
-                      <Icon name="clock outline" /> 0
+                      <Icon name="clock outline" /> {this.state.seconds}
                     </Statistic.Value>
                     <Statistic.Label>Time Elapsed</Statistic.Label>
                   </Statistic>
                 </Table.Cell>
                 <Table.Cell>
                   <BrushChart
-                    fake={this.props.fake}
                     series={this.props.series}
                     runRealtimeData={this.props.isRunning}
                     setCSVData={this.setCSVData}
+                    setSeconds={this.setSeconds}
                   />
                 </Table.Cell>
               </Table.Row>

@@ -87,11 +87,8 @@ export class BrushChart extends React.Component {
       this.setState((prevState) => ({
         seconds: prevState.seconds + 1,
       }));
-    } else {
-      this.setState((prevState) => ({
-        seconds: prevState.seconds,
-      }));
-    }
+      this.props.setSeconds(this.state.seconds);
+    } 
   }
 
   pushRealtimeData() {
@@ -104,9 +101,7 @@ export class BrushChart extends React.Component {
       this.setState({
         series: [
           {
-            data: this.state.series[0].data.concat(
-              this.props.series[0].data[this.state.seconds]
-            ),
+            data: this.state.series[0].data.concat(this.props.series[0].data[this.state.seconds]),
           },
         ],
 
@@ -118,9 +113,7 @@ export class BrushChart extends React.Component {
         options: {
           xaxis: {
             type: 'datetime',
-            categories: this.state.options.xaxis.categories.push(
-              this.state.seconds
-            ),
+            categories: this.state.options.xaxis.categories.push(this.state.seconds),
           },
         },
       });
@@ -148,7 +141,6 @@ export class BrushChart extends React.Component {
           type="area"
           height={130}
         />
-        <div>Timer: {this.state.seconds}</div>
       </div>
     );
   }

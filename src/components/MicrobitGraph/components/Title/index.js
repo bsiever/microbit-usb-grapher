@@ -16,31 +16,15 @@ class Title extends Component {
   };
   close = () => this.setState({ open: false });
 
-  handleSubmit = () => {
-    // if (
-    //   this.props.graphs !== undefined &&
-    //   this.props.graphs[this.props.key] !== undefined
-    // ) {
-    //   let deviceGraphs = Object.assign(this.props.graphs);
-    //   deviceGraphs[this.props.key].title = this.state.value;
-    //   this.props.setState({
-    //     graphs: deviceGraphs,
-    //   });
-    // }
-  };
+  handleSubmit = () => {};
 
   handleChange = (e, { value }) => this.setState({ value });
 
   render() {
     const { open } = this.state;
-    console.log(this.state);
+
     return (
       <Container textAlign="center">
-        {/* <Header
-          content={this.props.title}
-          size="huge"
-          style={{ color: '#FFF' }}
-        /> */}
         <Header size="huge" style={{ color: '#FFF' }}>
           {this.props.title}
 
