@@ -8,7 +8,6 @@ import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
 import HelpButton from '../../components/HelpInstructions';
 import './App.css';
-import hexFile from './microbit-Serial-Data-Example.hex';
 
 class App extends React.Component {
   constructor(props) {
@@ -102,7 +101,6 @@ class App extends React.Component {
     if (this.state.graphs[device.serialNumber] === undefined) {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
-        fake: false,
         deviceSerial: device.serialNumber,
         title: 'Microbit Graph ' + (this.state.microbitsConnected + 1),
         isRunning: false,
@@ -187,91 +185,6 @@ class App extends React.Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeTab: name });
 
-  generateFakeGraph() {
-    let graphs = this.state.graphs;
-    graphs[this.state.microbitsConnected] = {
-      fake: true,
-      deviceSerial: this.state.microbitsConnected,
-      title: 'Microbit Graph ' + (this.state.microbitsConnected + 1),
-      isRunning: false,
-      timeElapsed: 0,
-      series: [
-        {
-          data: [],
-        },
-      ],
-      options: {
-        chart: {
-          id: 'chart2',
-          type: 'line',
-          height: 230,
-          toolbar: {
-            autoSelected: 'pan',
-            show: false,
-          },
-        },
-        colors: ['#546E7A'],
-        stroke: {
-          width: 3,
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        fill: {
-          opacity: 1,
-        },
-        markers: {
-          size: 0,
-        },
-        xaxis: {
-          type: 'date',
-          categories: [],
-        },
-      },
-
-      seriesLine: [
-        {
-          data: [],
-        },
-      ],
-      optionsLine: {
-        chart: {
-          id: 'chart1',
-          height: 130,
-          type: 'area',
-          brush: {
-            target: 'chart2',
-            enabled: true,
-          },
-          selection: {
-            enabled: true,
-          },
-        },
-        colors: ['#008FFB'],
-        fill: {
-          type: 'gradient',
-          gradient: {
-            opacityFrom: 0.91,
-            opacityTo: 0.1,
-          },
-        },
-        xaxis: {
-          type: 'date',
-          tooltip: {
-            enabled: false,
-          },
-        },
-        yaxis: {
-          tickAmount: 1,
-        },
-      },
-    };
-    this.setState({
-      graphs: graphs,
-      microbitsConnected: this.state.microbitsConnected + 1,
-    });
-  }
-
   contextRef = createRef();
 
   render() {
@@ -289,32 +202,11 @@ class App extends React.Component {
         </Header>
 
         <Container textAlign="right" style={{ marginBottom: '-46px' }}>
-          <Button
-            onClick={() => {
-              var element = document.createElement('a');
-              element.setAttribute('href', hexFile);
-              element.setAttribute('download', 'microbitProgram.hex');
-
-              document.body.appendChild(element);
-              element.click();
-              document.body.removeChild(element);
-            }}
-          >
-            Download Hex File
-          </Button>
-
           <HelpButton />
         </Container>
 
         <Container textAlign="left">
           <AddMicroButton onAddComplete={this.microbitCallBack} />
-          <Button
-            onClick={() => {
-              this.generateFakeGraph();
-            }}
-          >
-            <Icon name="plus" />Add Fake Microbit
-          </Button>
         </Container>
 
         <Container textAlign="left" style={{ marginTop: '10px' }}>
@@ -342,11 +234,9 @@ class App extends React.Component {
               graphs[key].options &&
               graphs[key].series
             ) {
-              console.log(this.state.fake)
               return (
                 <div>
                   <MicrobitGraph
-                    fake={graphs[key].fake}
                     device={this.state.devices[key]}
                     title={graphs[key].title}
                     options={graphs[key].options}
