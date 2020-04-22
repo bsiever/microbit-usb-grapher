@@ -67,14 +67,6 @@ class MicrobitGraph extends Component {
                   </Statistic>
                 </Table.Cell>
                 <Table.Cell>
-                  {/* <BrushChart
-                    options={this.props.options}
-                    series={this.props.series}
-                    optionsLine={this.props.optionsLine}
-                    seriesLine={this.props.seriesLine}
-                    height={this.props.height}
-                    areaHeight={this.props.areaHeight}
-                  /> */}
                   <BrushChart
                     fake={this.props.fake}
                     series={this.props.series}

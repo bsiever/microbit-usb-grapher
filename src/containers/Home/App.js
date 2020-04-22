@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import '../../styles/App.css';
-import { Container, Menu, Button } from 'semantic-ui-react';
+import { Container, Menu } from 'semantic-ui-react';
 import { Header, Icon } from 'semantic-ui-react';
 import { AddMicroButton } from '../../components/AddMicroButton';
 import { uBitDisconnect } from '../../utils/microbit-api';

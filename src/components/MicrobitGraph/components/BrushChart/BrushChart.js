@@ -1,6 +1,5 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import faker from 'faker';
 
 export class BrushChart extends React.Component {
   constructor(props) {
@@ -96,39 +95,12 @@ export class BrushChart extends React.Component {
   }
 
   pushRealtimeData() {
-    if (this.props.runRealtimeData && this.props.fake) {
-      this.setState({
-        series: [
-          {
-            data: this.state.series[0].data.concat(faker.finance.amount()),
-          },
-        ],
-
-        seriesLine: [
-          {
-            data: this.state.series[0].data,
-          },
-        ],
-        options: {
-          xaxis: {
-            type: 'datetime',
-            categories: this.state.options.xaxis.categories.push(
-              this.state.seconds
-            ),
-          },
-        },
-      });
-
-      this.props.setCSVData(this.state.series[0].data);
-    } else if (
+    if (
       this.state.series[0].data != null &&
       this.state.series[0].data !== undefined &&
       this.props.runRealtimeData &&
       this.props.series[0].data[this.state.seconds] !== undefined
     ) {
-      console.log(this.state.seconds);
-      console.log(this.props.series[0].data[this.state.seconds]);
-
       this.setState({
         series: [
           {

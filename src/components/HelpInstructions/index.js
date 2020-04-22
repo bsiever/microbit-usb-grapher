@@ -70,7 +70,7 @@ class HelpButton extends Component {
                 How to use the Micro:bit WebUSB Grapher?
               </Accordion.Title>
               <Accordion.Content active={activeIndex === 0}>
-                <iframe src={pdf} height="900" width="900" />
+                <iframe src={pdf} height="900" width="100%" />
               </Accordion.Content>
 
               <Accordion.Title
