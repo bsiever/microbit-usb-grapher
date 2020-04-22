@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/microbit-usb-grapher/precache-manifest.b0d94b35d32f639ac25406208b2cd71a.js"
+  "/microbit-usb-grapher/precache-manifest.353b6f0a86facc2b958f5b3170dd952c.js"
 );
 
 self.addEventListener('message', (event) => {
