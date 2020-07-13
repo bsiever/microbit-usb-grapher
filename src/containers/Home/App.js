@@ -1,5 +1,4 @@
 import React, { createRef } from 'react';
-import '../../styles/App.css';
 import { Container, Menu } from 'semantic-ui-react';
 import { Header, Icon } from 'semantic-ui-react';
 import { AddMicroButton } from '../../components/AddMicroButton';
@@ -7,13 +6,13 @@ import { uBitDisconnect } from '../../utils/microbit-api';
 import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
 import HelpButton from '../../components/HelpInstructions';
+import '../../styles/App.css';
 import './App.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // mirco connections
       devices: {},
       isRunning: false,
       microbitsConnected: 0,
@@ -26,12 +25,12 @@ class App extends React.Component {
   }
 
   convertLetterToNumber(str) {
-    var out = 0,
-      len = str.length;
-    for (var pos = 0; pos < len; pos++) {
-      out += (str.charCodeAt(pos) - 64) * Math.pow(26, len - pos - 1);
+    var outputNumber = 0,
+      length = str.length;
+    for (var position = 0; position < length; position++) {
+      outputNumber += (str.charCodeAt(position) - 64) * Math.pow(26, length - position - 1);
     }
-    return out;
+    return outputNumber;
   }
 
   microbitCallBack(type, device, data) {
@@ -59,12 +58,13 @@ class App extends React.Component {
       seriesData.data !== undefined &&
       seriesData.data !== undefined
     ) {
+
       let specificGraph = graphs[device.serialNumber];
       let series = graphs[device.serialNumber].series[0];
-      if (isNaN(seriesData.data)) {
-        seriesData.data = this.convertLetterToNumber(seriesData.data);
-      }
+
+      if (isNaN(seriesData.data)) { seriesData.data = this.convertLetterToNumber(seriesData.data) }
       seriesData.data = Math.round(10 * seriesData.data) / 10; // round to the nearest tenth
+      
       series.data.push(seriesData.data.toString());
       let updatedGraph = [...graphs];
       updatedGraph[device.serialNumber] = {
