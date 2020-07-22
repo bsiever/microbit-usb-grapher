@@ -7,7 +7,6 @@ import MicrobitGraph from '../../components/MicrobitGraph';
 import StickyStatistics from '../../components/StickyStatistics';
 import HelpButton from '../../components/HelpInstructions';
 import '../../styles/App.css';
-import './App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -64,7 +63,7 @@ class App extends React.Component {
 
       if (isNaN(seriesData.data)) { seriesData.data = this.convertLetterToNumber(seriesData.data) }
       seriesData.data = Math.round(10 * seriesData.data) / 10; // round to the nearest tenth
-      
+
       series.data.push(seriesData.data.toString());
       let updatedGraph = [...graphs];
       updatedGraph[device.serialNumber] = {
@@ -183,12 +182,21 @@ class App extends React.Component {
     }
   }
 
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }
+
   handleItemClick = (e, { name }) => this.setState({ activeTab: name });
 
   contextRef = createRef();
 
   render() {
     const graphs = this.state.graphs;
+    const devices = this.state.devices;
     const { activeTab } = this.state;
 
     return (
@@ -227,6 +235,15 @@ class App extends React.Component {
           timeElapsed={this.state.timeElapsed}
         />
         <Container>
+          {this.isEmpty(devices) && (
+            <div>
+              <Container textAlign='center'>
+                <Icon name='usb' size='massive' inverted />
+                <Header as='h1' inverted>Connect Micro:bit(s)</Header>
+              </Container>
+            </div>
+          )}
+
           {Object.keys(graphs).map((key, index) => {
             if (
               this.state.activeTab === graphs[key].title &&
@@ -264,7 +281,9 @@ class App extends React.Component {
                 </div>
               );
             } else {
-              return <div />;
+              return (
+                <div />
+              );
             }
           })}
         </Container>
