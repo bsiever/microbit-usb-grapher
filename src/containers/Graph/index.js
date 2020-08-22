@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Container, Table, Divider, Statistic, Icon } from 'semantic-ui-react';
-import PlayButton from './components/PlayButton';
-import SaveDataButton from './components/SaveData';
-import DisconnectMicroButton from './components/DisconnectMicroButton';
-import { BrushChart } from './components/BrushChart/BrushChart';
+import React, { Component } from '../../components/BrushChart/node_modules/react';
+import { Container, Table, Divider, Statistic, Icon } from '../../components/DisconnectMicroButton/node_modules/semantic-ui-react';
+import PlayButton from '../../components/PlayButton';
+import SaveDataButton from '../../components/SaveData';
+import DisconnectMicroButton from '../../components/DisconnectMicroButton';
+import { BrushChart } from '../../components/BrushChart/BrushChart';
 import moment from 'moment';
-import Title from './components/Title';
+import Title from '../../components/Title';
 
 class MicrobitGraph extends Component {
   constructor(props) {

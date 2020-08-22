@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from '../../../BrushChart/node_modules/react';
 import {
   Button,
   Header,
@@ -6,7 +6,7 @@ import {
   Icon,
   Modal,
   Input,
-} from 'semantic-ui-react';
+} from '../../../DisconnectMicroButton/node_modules/semantic-ui-react';
 
 class Title extends Component {
   state = { open: false };

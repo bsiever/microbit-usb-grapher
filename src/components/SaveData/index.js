@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Icon, Button} from 'semantic-ui-react';
+import React, {Component} from '../../../BrushChart/node_modules/react';
+import {Icon, Button} from '../../../DisconnectMicroButton/node_modules/semantic-ui-react';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
