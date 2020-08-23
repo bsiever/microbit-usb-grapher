@@ -3,7 +3,7 @@ import { Container, Menu } from 'semantic-ui-react';
 import { Header, Icon } from 'semantic-ui-react';
 import { AddMicroButton } from '../../components/AddMicroButton';
 import { uBitDisconnect } from '../../utils/microbit-api';
-import MicrobitGraph from '../../components/MicrobitGraph';
+import MicrobitGraph from '../Graph';
 import StickyStatistics from '../../components/StickyStatistics';
 import HelpButton from '../../components/HelpInstructions';
 import '../../styles/App.css';

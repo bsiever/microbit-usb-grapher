@@ -1,4 +1,4 @@
-import React, { Component } from '../../../BrushChart/node_modules/react';
+import React, { Component } from 'react';
 import { Button, Confirm } from 'semantic-ui-react';
 
 export class DisconnectMicroButton extends Component {

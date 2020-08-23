@@ -1,4 +1,4 @@
-import React from '../DisconnectMicroButton/node_modules/react';
+import React from 'react';
 import Chart from 'react-apexcharts';
 
 export class BrushChart extends React.Component {

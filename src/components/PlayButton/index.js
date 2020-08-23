@@ -1,5 +1,5 @@
-import React, {Component} from '../../../BrushChart/node_modules/react';
-import {Icon, Button} from '../../../DisconnectMicroButton/node_modules/semantic-ui-react';
+import React, {Component} from 'react';
+import {Icon, Button} from 'semantic-ui-react';
 
 class PlayButton extends Component {
   render () {
