@@ -12,7 +12,7 @@ Table of Contents
 <!--ts-->
    * [Project Overview](#project-overview)
       * [Application Architecture](#application-architecture)
-   * [Setup](#potential-components)
+   * [Setup](#setup)
    * [Features](#features)
    * [Deliverables](#deliverables)
    * [Potential Components](#potential-components)
