@@ -14,6 +14,7 @@ Table of Contents
       * [Application Architecture](#application-architecture)
    * [Setup](#setup)
    * [Features](#features)
+      * [Task Board](#task-board)
    * [Deliverables](#deliverables)
    * [Potential Components](#potential-components)
       * [USB Interaction](#usb-interaction)
@@ -54,6 +55,10 @@ TO DO
   * Users should be able to download all data as a CSV file
 * Desireable 
   * Ability to measure time between different events
+  
+### Task Board
+
+Visit our task board [here](https://github.com/bsiever/microbit-usb-grapher/projects/1) if you are interested in contributing. 
 
 ## Deliverables 
 
