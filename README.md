@@ -1,16 +1,40 @@
 # Launch our App! 
 
-[Go!](https://bsiever.github.io/microbit-usb-grapher/)
+[Click here](https://bsiever.github.io/microbit-usb-grapher/) to view our latest deloyment! (Currently Outdated)
 
 # Micro:bit USB Grapher
 
 A WebPage/Site that can graph, manipulate, and save data collected on the micro:bit. 
 
+Table of Contents
+=================
+
+<!--ts-->
+   * [Project Overview](#project-overview)
+      * [Application Architecture](#application-architecture)
+   * [Setup](#potential-components)
+   * [Features](#features)
+   * [Deliverables](#deliverables)
+   * [Potential Components](#potential-components)
+      * [USB Interaction](#usb-interaction)
+      * [Graphing](#graphing)
+   * [Example Documentation](#example-documentation)
+      * [Experiment Setup (prior to this application)](#experiment-setup-prior-to-this-application)
+<!--te-->
+
 ## Project Overview
 
 The [micro:bit](https://microbit.org/) is a low-cost hardware platform that is used to introduce both computer programming principles and to facilitate maker activities, like making wearables. It's already widely used by K-12 educators for computing activities, but, due to it on-board sensors and its extensibility, it's could also augment classroom science demonstrations.  (For example, the existing [Makecode](https://makecode.microbit.org) editor already can be used to collect and graph streaming data. See [here](https://makecode.microbit.org/_Yfrc6f85EMR5) for a simulated micro:bit graphing accelerometer data. Click the `Edit` button, then clicke the `Show console Simulator` button.  The micro:bit shown as a rectangle with buttons and gold connectors at the bottom. Moving over the image of the micro:bit will simulate tilting and the graphed data)
 
-The Makecode simulator can already collect and graph data, but it's data collection window can only graph a small sample of data and it's limited to just one micro:bit at a time.  The goal of this project is to develop a stand-alone web site that will collect information from one or more micro:bits and allow users to graph a wider range of data and interact with the data in ways not supported by Makecode.
+The Makecode simulator can already collect and graph data, but it's data collection window can only graph a small sample of data and it's limited to just one micro:bit at a time.  The goal of this project is to develop a stand-alone website that will collect information from one or more micro:bits and allow users to graph a wider range of data and interact with the data in ways not supported by Makecode.
+
+###  Application Architecture 
+
+TO DO
+
+## Setup
+ 
+TO DO
 
 ## Features
 
@@ -46,11 +70,11 @@ The Makecode simulator can already collect and graph data, but it's data collect
 
 ### Graphing
 
+* [ApexCharts.js](https://apexcharts.com/)
 * [Chart.js](https://www.chartjs.org/)
 * [Chartist](https://gionkunz.github.io/chartist-js/)
 * [D3](https://d3js.org/)
 * [Plot.ly](https://plot.ly/javascript/)
-* [ApexCharts.js](https://apexcharts.com/)
 * [JSCharts](http://www.jscharts.com):  Free version is watermarked
 
 TODO: More and descriptions of good/bad
