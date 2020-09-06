@@ -1,7 +1,7 @@
 {
   "name": "6-microbit",
   "version": "0.1.0",
-  "homepage": "http://csl.mtu.edu/classes/cs4760/www/projects/s20/group6/www/app",
+  "homepage": "https://bsiever.github.io/microbit-usb-grapher/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
