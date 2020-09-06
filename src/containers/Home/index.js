@@ -1,23 +1,22 @@
-import React, { createRef } from 'react';
-import { Container, Menu } from 'semantic-ui-react';
-import { Header, Icon } from 'semantic-ui-react';
-import { AddMicroButton } from '../../components/AddMicroButton';
-import { uBitDisconnect } from '../../utils/microbit-api';
-import MicrobitGraph from '../Graph';
-import StickyStatistics from '../../components/StickyStatistics';
-import HelpButton from '../../components/HelpInstructions';
-import '../../styles/App.css';
+import React, { createRef } from "react";
+import { Container, Menu } from "semantic-ui-react";
+import { Header, Icon } from "semantic-ui-react";
+import { AddMicroButton } from "../../components/AddMicroButton";
+import { uBitDisconnect } from "../../utils/microbit-api";
+import MicrobitGraph from "../Graph";
+import StickyStatistics from "../../components/StickyStatistics";
+import HelpButton from "../../components/HelpInstructions";
+import "../../styles/App.css";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       devices: {},
-      isRunning: false,
       microbitsConnected: 0,
       graphs: [],
       seconds: 0,
-      activeTab: 'Microbit Graph 1',
+      activeTab: "Microbit Graph 1",
     };
 
     this.microbitCallBack = this.microbitCallBack.bind(this);
@@ -27,59 +26,25 @@ class App extends React.Component {
     var outputNumber = 0,
       length = str.length;
     for (var position = 0; position < length; position++) {
-      outputNumber += (str.charCodeAt(position) - 64) * Math.pow(26, length - position - 1);
+      outputNumber +=
+        (str.charCodeAt(position) - 64) * Math.pow(26, length - position - 1);
     }
-    return outputNumber;
+    return Math.round(10 * outputNumber) / 10;
   }
 
   microbitCallBack(type, device, data) {
-    if (type === 'connected') {
+    if (type === "connected") {
       let devices = this.state.devices;
       devices[device.serialNumber] = device;
       this.setState({ devices: devices });
       this.createGraph(device);
-    }
-
-    let graphs = this.state.graphs;
-    let seriesData = data;
-
-    if (
+    } else if (
       device !== undefined &&
       device !== null &&
       device.serialNumber !== undefined &&
-      device.serialNumber !== null &&
-      graphs[device.serialNumber] !== undefined &&
-      graphs[device.serialNumber] !== null &&
-      graphs[device.serialNumber].series !== undefined &&
-      graphs[device.serialNumber].series !== null &&
-      seriesData !== null &&
-      seriesData !== undefined &&
-      seriesData.data !== undefined &&
-      seriesData.data !== undefined
+      device.serialNumber !== null
     ) {
-
-      let specificGraph = graphs[device.serialNumber];
-      let series = graphs[device.serialNumber].series[0];
-
-      if (isNaN(seriesData.data)) { seriesData.data = this.convertLetterToNumber(seriesData.data) }
-      seriesData.data = Math.round(10 * seriesData.data) / 10; // round to the nearest tenth
-
-      series.data.push(seriesData.data.toString());
-      let updatedGraph = [...graphs];
-      updatedGraph[device.serialNumber] = {
-        ...updatedGraph[device.serialNumber],
-        deviceSerial: specificGraph.deviceSerial,
-        title: specificGraph.title,
-        isRunning: specificGraph.isRunning,
-        timeElapsed: specificGraph.timeElapsed,
-        series: [series],
-        options: specificGraph.options,
-        seriesLine: specificGraph.seriesLine,
-        optionsLine: specificGraph.optionsLine,
-      };
-      this.setState({
-        graphs: updatedGraph,
-      });
+      this.updateGraph(device.serialNumber, data);
     }
   }
 
@@ -101,78 +66,41 @@ class App extends React.Component {
       let graphs = this.state.graphs;
       graphs[device.serialNumber] = {
         deviceSerial: device.serialNumber,
-        title: 'Microbit Graph ' + (this.state.microbitsConnected + 1),
+        title: "Microbit Graph " + (this.state.microbitsConnected + 1),
         isRunning: false,
         timeElapsed: 0,
-        series: [
-          {
-            data: [],
-          },
-        ],
+
+        // Graph Settings 
+        series: [{ data: [] }],
         options: {
           chart: {
-            id: 'chart2',
-            type: 'line',
+            id: "chart2",
+            type: "line",
             height: 230,
-            toolbar: {
-              autoSelected: 'pan',
-              show: false,
-            },
+            toolbar: { autoSelected: "pan", show: false },
           },
-          colors: ['#546E7A'],
-          stroke: {
-            width: 3,
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          fill: {
-            opacity: 1,
-          },
-          markers: {
-            size: 0,
-          },
-          xaxis: {
-            type: 'date',
-            categories: [],
-          },
+          colors: ["#546E7A"],
+          stroke: { width: 3 },
+          dataLabels: { enabled: false },
+          fill: { opacity: 1 },
+          markers: { size: 0 },
+          xaxis: { type: "date", categories: [] },
         },
-
-        seriesLine: [
-          {
-            data: [],
-          },
-        ],
+        seriesLine: [{ data: [] } ],
         optionsLine: {
           chart: {
-            id: 'chart1',
+            id: "chart1",
             height: 130,
-            type: 'area',
-            brush: {
-              target: 'chart2',
-              enabled: true,
-            },
-            selection: {
-              enabled: true,
-            },
+            type: "area",
+            brush: { target: "chart2", enabled: true },
+            selection: { enabled: true },
           },
-          colors: ['#008FFB'],
-          fill: {
-            type: 'gradient',
-            gradient: {
-              opacityFrom: 0.91,
-              opacityTo: 0.1,
-            },
+          colors: ["#008FFB"],
+          fill: { type: "gradient", gradient: { opacityFrom: 0.91, opacityTo: 0.1 },
           },
-          xaxis: {
-            type: 'date',
-            tooltip: {
-              enabled: false,
-            },
+          xaxis: { type: "date", tooltip: { enabled: false },
           },
-          yaxis: {
-            tickAmount: 1,
-          },
+          yaxis: { tickAmount: 1 },
         },
       };
       this.setState({
@@ -182,10 +110,34 @@ class App extends React.Component {
     }
   }
 
-  isEmpty(obj) {
+  updateGraph(key, data) {
+    let graphs = this.state.graphs;
+
+    if (
+      graphs[key] !== undefined &&
+      graphs[key] !== null &&
+      graphs[key].series !== undefined &&
+      graphs[key].series !== null
+    ) {
+      
+      data.data = (isNaN(data.data)) ? this.convertLetterToNumber(data.data) : Math.round(10 * data.data) / 10; // round to the nearest tenth
+
+      let series = graphs[key].series[0];
+      series.data.push(data.data.toString());
+      let specificGraph = JSON.parse(JSON.stringify(graphs[key]));
+      specificGraph.series = [series];
+      let updatedGraphs = [...graphs];
+      updatedGraphs[key] = specificGraph;
+
+      this.setState({
+        graphs: updatedGraphs,
+      });
+    }
+  }
+
+  isObjectEmpty(obj) {
     for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        return false;
+      if (obj.hasOwnProperty(key)) return false;
     }
     return true;
   }
@@ -209,7 +161,7 @@ class App extends React.Component {
           </Header.Subheader>
         </Header>
 
-        <Container textAlign="right" style={{ marginBottom: '-46px' }}>
+        <Container textAlign="right" style={{ marginBottom: "-46px" }}>
           <HelpButton />
         </Container>
 
@@ -217,7 +169,7 @@ class App extends React.Component {
           <AddMicroButton onAddComplete={this.microbitCallBack} />
         </Container>
 
-        <Container textAlign="left" style={{ marginTop: '10px' }}>
+        <Container textAlign="left" style={{ marginTop: "10px" }}>
           <Menu attached="top" id="tabView" tabular>
             {Object.keys(graphs).map((key, index) => {
               return (
@@ -235,11 +187,13 @@ class App extends React.Component {
           timeElapsed={this.state.timeElapsed}
         />
         <Container>
-          {this.isEmpty(devices) && (
+          {this.isObjectEmpty(devices) && (
             <div>
-              <Container textAlign='center'>
-                <Icon name='usb' size='massive' inverted />
-                <Header as='h1' inverted>Connect Micro:bit(s)</Header>
+              <Container textAlign="center">
+                <Icon name="usb" size="massive" inverted />
+                <Header as="h1" inverted>
+                  Connect Micro:bit(s)
+                </Header>
               </Container>
             </div>
           )}
@@ -281,9 +235,7 @@ class App extends React.Component {
                 </div>
               );
             } else {
-              return (
-                <div />
-              );
+              return <div />;
             }
           })}
         </Container>
